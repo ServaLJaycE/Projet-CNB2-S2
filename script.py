@@ -6,17 +6,20 @@ from tkinter import *
 #Toutes les fonctions :
 # Fonction pour modifier le excel
 def import_excel():
-    #on demande un nom de fichier dans la fenetre
-    #nom_fichier = input("Quel est le nom du fichier ?")
-    #on import le fichier excel
-    workbook = load_workbook(filename="test.xlsx")
+    #on charge le fichier excel
+    nom_fichier = texte.get("1.0", "end-1c")
+    #on rajoute l'extenssion .xlsx
+    nom_fichier = nom_fichier + ".xlsx"
+    workbook = load_workbook(filename=nom_fichier)
     #on ouvre le fichier excel
     sheet = workbook.active
     #on modifie la cellule A1
     sheet["A1"] = "ca change"
     #on sauvegarde le fichier
-    workbook.save(filename="test.xlsx")
+    workbook.save(filename=nom_fichier)
 
+    
+    
 # Fonction pour changer le theme
 def toggle():
     global switch_value
@@ -45,8 +48,6 @@ def toggle():
         label=Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
         label.pack()
 
-        
-        
 
 
 
@@ -80,15 +81,22 @@ boutton.place(x=largeur-50, y=0)
 label = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
 label.pack()
 
-#bouton de prise de données
-boutton = Button(fenetre, text="importer vos données", command=import_excel)
-boutton.place(x=200, y=200)
+#zone de texte
+texte = Text(fenetre, width=largeur, height=hauteur)
+#on definit la taille de la zone de texte
+texte.config(width=15, height=1)
+texte.pack()
+#on pre-ecrit du texte dans la zone de texte
+texte.insert(END, "nom du fichier")
+
+
+
+#bouton qui lance l'importation seulement quand on appuie dessus
+boutton = Button(fenetre, text="Importer", command=import_excel)
 boutton.pack()
 
 
-  
 
-  
   
 # Bouton pour changer le theme
 switch = Button(fenetre, image=light, 
