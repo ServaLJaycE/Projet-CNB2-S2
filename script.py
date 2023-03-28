@@ -100,7 +100,7 @@ boutton.pack()
 
 #titre
 label = Label(fenetre, text="Selectionez votre type de sol", bg="white", fg="black")
-label.pack(anchor="w", padx=10, pady=50)
+label.pack(anchor="w", padx=10, pady=20)
 
 #bouton importattion terre
 boutton_t = Button(fenetre, text="terre")
@@ -109,6 +109,18 @@ boutton_t.pack(anchor="w", padx=10, pady=5)
 #bouton importattion eau
 boutton_e = Button(fenetre, text="eau"  )
 boutton_e.pack(anchor="w", padx=10, pady=5)
+
+#bouton importattion air
+boutton_a = Button(fenetre, text="air")
+boutton_a.pack(anchor="w", padx=10, pady=5)
+
+#bouton importattion feu
+boutton_f = Button(fenetre, text="feu")
+boutton_f.pack(anchor="w", padx=10, pady=5)
+
+#bouton importattion electrique
+boutton_el = Button(fenetre, text="electrique")
+boutton_el.pack(anchor="w", padx=10, pady=5)
 
 
   
