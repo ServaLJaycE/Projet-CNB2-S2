@@ -104,12 +104,6 @@ switch.place(x=0, y=0)
 #on ouvre fenetre en plein ecran
 fenetre.attributes('-fullscreen', True)
 
-
-
-
-
-
-
 fenetre.mainloop()
 
 
