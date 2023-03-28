@@ -18,6 +18,8 @@ def import_excel():
     #on sauvegarde le fichier
     workbook.save(filename=nom_fichier)
 
+
+
     
     
 # Fonction pour changer le theme
@@ -88,13 +90,13 @@ texte.config(width=15, height=1)
 texte.pack()
 #on pre-ecrit du texte dans la zone de texte
 texte.insert(END, "nom du fichier")
+#modifier pour plutot mettre un bouton qui ouvre l'explorateur de fichier windows
 
 
 
 #bouton qui lance l'importation seulement quand on appuie dessus
 boutton = Button(fenetre, text="Importer", command=import_excel)
 boutton.pack()
-
 
 
   
@@ -110,7 +112,7 @@ switch.place(x=0, y=0)
 
 
 #on ouvre fenetre en plein ecran
-fenetre.attributes('-fullscreen', True)
+#fenetre.attributes('-fullscreen', True)
 
 fenetre.mainloop()
 
