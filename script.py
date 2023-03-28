@@ -61,28 +61,32 @@ def toggle():
     if switch_value == True:
         switch.config(image=dark, bg="#26242f",
                       activebackground="#26242f")
-          
+        switch_value = False
         #met la fenetre en noir
         fenetre.config(bg="#26242f") 
-        switch_value = False
+        
         #suprime le label deja existant
         #a ajouter
-        label=Label(fenetre, text="Bienvenue dans S-EAU-L", bg="#26242f", fg="white")
+        label.destroy()
+        
+        label=Label(fenetre, text="Bienvenue dans S-EAU-L", bg="black", fg="white")
         label.pack()
         
   
     else:
         switch.config(image=light, bg="white", 
                       activebackground="white")
-          
+        switch_value = True  
         #met la fenetre en blanc
         fenetre.config(bg="white") 
-        switch_value = True
+    
         #suprime le label deja existant
         #a ajouter
+        label.destroy()
+       
         label=Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
         label.pack()
-
+        
         
   
   
