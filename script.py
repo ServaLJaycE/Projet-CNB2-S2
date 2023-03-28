@@ -78,6 +78,8 @@ hauteur = fenetre.winfo_screenheight()
 boutton = Button(fenetre, text="Quitter", command=fenetre.quit)
 boutton.place(x=largeur-50, y=0)
 
+
+
 #bouton de bienvenue
 label = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
 label.pack()
@@ -95,7 +97,11 @@ label.pack()
 #bouton qui lance l'importation seulement quand on appuie dessus
 boutton = Button(fenetre, text="Importer", command=import_excel)
 boutton.pack()
+boutton = Button(fenetre, text="terre")
+boutton.pack()
 
+boutton = Button(fenetre, text="eau"  )
+boutton.pack()
 
 
   
