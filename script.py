@@ -97,11 +97,18 @@ label.pack()
 #bouton qui lance l'importation seulement quand on appuie dessus
 boutton = Button(fenetre, text="Importer", command=import_excel)
 boutton.pack()
-boutton = Button(fenetre, text="terre")
-boutton.pack()
 
-boutton = Button(fenetre, text="eau"  )
-boutton.pack()
+#titre
+label = Label(fenetre, text="Selectionez votre type de sol", bg="white", fg="black")
+label.pack(anchor="w", padx=10, pady=50)
+
+#bouton importattion terre
+boutton_t = Button(fenetre, text="terre")
+boutton_t.pack(anchor="w", padx=10, pady=5)
+
+#bouton importattion eau
+boutton_e = Button(fenetre, text="eau"  )
+boutton_e.pack(anchor="w", padx=10, pady=5)
 
 
   
