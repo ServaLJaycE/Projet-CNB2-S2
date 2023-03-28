@@ -9,8 +9,8 @@ def import_excel():
     #on charge le fichier excel
    # nom_fichier = texte.get("1.0", "end-1c")
     #on rajoute l'extenssion .xlsx
-    files = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx'),('all files','.*')])
     #nom_fichier = nom_fichier + ".xlsx"
+    files = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx'),('all files','.*')])
     workbook = load_workbook(filename=files)
     #on ouvre le fichier excel
     sheet = workbook.active
@@ -83,12 +83,12 @@ label = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
 label.pack()
 
 #zone de texte
-texte = Text(fenetre, width=largeur, height=hauteur)
+#texte = Text(fenetre, width=largeur, height=hauteur)
 #on definit la taille de la zone de texte
-texte.config(width=15, height=1)
-texte.pack()
+#texte.config(width=15, height=1)
+#texte.pack()
 #on pre-ecrit du texte dans la zone de texte
-texte.insert(END, "nom du fichier")
+#texte.insert(END, "nom du fichier")
 
 
 
