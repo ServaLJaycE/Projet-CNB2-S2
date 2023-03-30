@@ -12,6 +12,6 @@ os.system("pip install tk")
 
 time.sleep(5)
 #os.system("python script.py")
-#import script
+import script
 
 

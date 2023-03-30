@@ -11,14 +11,16 @@ def import_excel():
     ##nom_fichier = nom_fichier + ".xlsx"
     ##workbook = load_workbook(filename=nom_fichier)
     files = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
-    workbook = load_workbook(filename=files)
-    #on ouvre le fichier excel
-    sheet = workbook.active
-    #on modifie la cellule A1
-    sheet["A1"] = "ca change"
-    #on sauvegarde le fichier
-    workbook.save(filename="value.xlsx")
-
+    return files
+   
+def calcul_terre(files):
+     workbook = load_workbook(filename=files)
+     #on ouvre le fichier excel
+     sheet = workbook.active
+     #on modifie la cellule A1
+     sheet["A1"] = "ca change"
+     #on sauvegarde le fichier
+     workbook.save(filename="value.xlsx")
     
     
 # Fonction pour changer le theme
@@ -48,10 +50,6 @@ def toggle():
         #a ajouter       
         label=Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
         label.pack()
-
-
-
-
 #On met le code principal :
 
 #on cree la fenetre
@@ -103,7 +101,7 @@ label = Label(fenetre, text="Selectionez votre type de sol", bg="white", fg="bla
 label.pack(anchor="w", padx=10, pady=20)
 
 #bouton importattion terre
-boutton_t = Button(fenetre, text="terre")
+boutton_t = Button(fenetre, text="terre", command=calcul_terre(import_excel()))
 boutton_t.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion eau
@@ -138,7 +136,7 @@ switch.place(x=0, y=0)
 
 
 #on ouvre fenetre en plein ecran
-#fenetre.attributes('-fullscreen', True)
+fenetre.attributes('-fullscreen', True)
 
 fenetre.mainloop()
 
