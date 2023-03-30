@@ -121,7 +121,9 @@ boutton_f.pack(anchor="w", padx=10, pady=5)
 #bouton importattion electrique
 boutton_el = Button(fenetre, text="electrique")
 boutton_el.pack(anchor="w", padx=10, pady=5)
-
+#bouton importattion poison
+boutton_po = Button(fenetre, text="poison")
+boutton_po.pack(anchor="w", padx=10, pady=5)
 
   
 # Bouton pour changer le theme
