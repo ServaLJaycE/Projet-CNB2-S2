@@ -1,8 +1,7 @@
 from openpyxl import load_workbook
 from tkinter import * 
 from tkinter.filedialog import *
-
-
+import tkinter as tk
 #Toutes les fonctions :
 #Fonction pour modifier le excel
 def import_excel():
@@ -10,18 +9,56 @@ def import_excel():
     ##nom_fichier = texte.get("1.0", "end-1c")
     ##nom_fichier = nom_fichier + ".xlsx"
     ##workbook = load_workbook(filename=nom_fichier)
-    files = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
-    return files
-   
-def calcul_terre(files):
-     workbook = load_workbook(filename=files)
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
+    return donnees_importees
+  
+def calcul_terre(donnees):
+     workbook = load_workbook(filename=donnees)
      #on ouvre le fichier excel
      sheet = workbook.active
      #on modifie la cellule A1
-     sheet["A1"] = "ca change"
+     sheet["A1"] = "terre"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
-    
+def executer_terre():
+     donnees_importees = import_excel()
+     calcul_terre(donnees_importees)
+     resultat="fin"
+     resultat_label.configure(text="état : " + str(resultat))
+def calcul_eau(donnees):
+     workbook = load_workbook(filename=donnees)
+     #on ouvre le fichier excel
+     sheet = workbook.active
+     #on modifie la cellule A1
+     sheet["A1"] = "eau"
+     #on sauvegarde le fichier
+     workbook.save(filename="value.xlsx")
+def executer_eau():
+     donnees_importees = import_excel()
+     calcul_eau(donnees_importees)
+     resultat="fin"
+     resultat_label.configure(text="état : " + str(resultat))
+def calcul_air(donnees):
+     workbook = load_workbook(filename=donnees)
+     #on ouvre le fichier excel
+     sheet = workbook.active
+     #on modifie la cellule A1
+     sheet["A1"] = "air"
+     #on sauvegarde le fichier
+     workbook.save(filename="value.xlsx")
+def executer_air():
+     donnees_importees = import_excel()
+     calcul_air(donnees_importees)
+     resultat="fin"
+     resultat_label.configure(text="état : " + str(resultat))
+
+
+
+
+         
+     # Afficher le résultat dans la fenêtre principale
+      
+
     
 # Fonction pour changer le theme
 def toggle():
@@ -93,23 +130,26 @@ label.pack()
 
 
 #bouton qui lance l'importation seulement quand on appuie dessus
-boutton = Button(fenetre, text="Importer", command=import_excel)
-boutton.pack()
-
+#boutton = Button(fenetre, text="Importer", command=import_excel)
+#boutton.pack()
+ 
 #titre
 label = Label(fenetre, text="Selectionez votre type de sol", bg="white", fg="black")
 label.pack(anchor="w", padx=10, pady=20)
 
+resultat_label = tk.Label(fenetre, text="état : ")
+resultat_label.pack(anchor="w", padx=10, pady=5)
+
 #bouton importattion terre
-boutton_t = Button(fenetre, text="terre", command=calcul_terre(import_excel()))
+boutton_t = Button(fenetre, text="terre", command=executer_terre)
 boutton_t.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion eau
-boutton_e = Button(fenetre, text="eau"  )
+boutton_e = Button(fenetre, text="eau", command=executer_eau )
 boutton_e.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion air
-boutton_a = Button(fenetre, text="air")
+boutton_a = Button(fenetre, text="air",command=executer_air)
 boutton_a.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion feu
