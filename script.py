@@ -2,7 +2,14 @@ from openpyxl import load_workbook
 from tkinter import * 
 from tkinter.filedialog import *
 import tkinter as tk
+
+
+
+
+
 #Toutes les fonctions :
+
+
 #Fonction pour modifier le excel
 def import_excel():
     #on charge le fichier excel
@@ -12,6 +19,8 @@ def import_excel():
     donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
     return donnees_importees
   
+
+#Les fonction de calcul
 def calcul_terre(donnees):
      workbook = load_workbook(filename=donnees)
      #on ouvre le fichier excel
@@ -55,7 +64,6 @@ def executer_air():
      resultat_label.configure(text="état : " + str(resultat))
 
 
-
 # Afficher le nouveau tableau excel
 def afficher_excel():
      #on charge le fichier excel
@@ -88,6 +96,8 @@ def toggle():
         label_select.pack()
         resultat_label.config(bg="#26242f", fg="white")
         resultat_label.pack()
+        text_pre.config(bg="grey15", fg="white")
+        text_pre.pack()
     else:
         switch.config(image=light, bg="white", 
                       activebackground="white")
@@ -101,6 +111,8 @@ def toggle():
         label_select.pack()
         resultat_label.config(bg="white", fg="black")
         resultat_label.pack()
+        text_pre.config(bg="white", fg="black")
+        text_pre.pack()
 
 
 
@@ -116,6 +128,7 @@ fenetre.title("S-EAU-L")
 fenetre.geometry("500x500")
 fenetre.config(bg="white") 
   
+
 # Ajout des logos pour le theme
 light = PhotoImage(file="light.png")
 light = light.subsample(30, 30) #on redefinit leurs tailles
@@ -124,21 +137,20 @@ dark = dark.subsample(30, 30) #on redefinit leurs tailles
 switch_value = True
 
 
-
-
 #on demande les données de tailles de la fenetre
 largeur = fenetre.winfo_screenwidth()
 hauteur = fenetre.winfo_screenheight()
+
 
 #bouton pour quitter
 boutton = Button(fenetre, text="Quitter", command=fenetre.quit)
 boutton.place(x=largeur-50, y=0)
 
 
-
 #bouton de bienvenue
 label_titre = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
 label_titre.pack()
+
 
 #zone de texte
 ##texte = Text(fenetre, width=largeur, height=hauteur)
@@ -148,16 +160,14 @@ label_titre.pack()
 #on pre-ecrit du texte dans la zone de texte
 ##texte.insert(END, "nom du fichier")
 
-
-
 #bouton qui lance l'importation seulement quand on appuie dessus
 #boutton = Button(fenetre, text="Importer", command=import_excel)
 #boutton.pack()
  
-#titre
-label_select = Label(fenetre, text="Selectionez votre type de sol", bg="white", fg="black")
-label_select.pack(anchor="w", padx=10, pady=20)
 
+#titre
+label_select = Label(fenetre, text="Selectionez votre type de sol :", bg="white", fg="black")
+label_select.pack(anchor="w", padx=10, pady=20)
 
 
 #bouton importattion terre
@@ -184,6 +194,7 @@ boutton_el.pack(anchor="w", padx=10, pady=5)
 boutton_po = Button(fenetre, text="poison")
 boutton_po.pack(anchor="w", padx=10, pady=5)
 
+
 #état de la modification
 resultat_label = tk.Label(fenetre, text="état : ")
 resultat_label.pack(anchor="w", padx=90, pady=20)
@@ -193,15 +204,17 @@ resultat_label.pack(anchor="w", padx=90, pady=20)
 button_pre = Button(fenetre, text="Afficher les valeurs", command=afficher_excel)
 button_pre.pack()
 
-#zone de preview
-text_pre = tk.Text(fenetre, wrap="none")
+
+#zone de texte preview
+text_pre = tk.Text(fenetre, width=largeur//3, height=hauteur//3)
 scrollbar_y = tk.Scrollbar(fenetre, orient="vertical", command=text_pre.yview)
 scrollbar_x = tk.Scrollbar(fenetre, orient="horizontal", command=text_pre.xview)
 text_pre.configure(yscrollcommand=scrollbar_y.set, xscrollcommand=scrollbar_x.set)
-scrollbar_y.pack(side="right", fill="y")
-scrollbar_x.pack(side="bottom", fill="x")
-text_pre.pack(expand=True, fill="both")
-    
+# pack les scrollbars et text_pre
+scrollbar_y.pack(side="right", fill="y",padx=(0,0), pady=(6,34))
+scrollbar_x.pack(side="bottom", fill="x", padx=20, pady=5)
+text_pre.pack(expand=True, padx=(20,10), pady=5)
+
   
 # Bouton pour changer le theme
 switch = Button(fenetre, image=light, 
