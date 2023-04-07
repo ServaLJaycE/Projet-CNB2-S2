@@ -2,6 +2,8 @@ from openpyxl import load_workbook
 from tkinter import * 
 from tkinter.filedialog import *
 import tkinter as tk
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 
@@ -29,6 +31,7 @@ def calcul_terre(donnees):
      sheet["A1"] = "terre"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
+     afficher_graphique()
 def executer_terre():
      donnees_importees = import_excel()
      calcul_terre(donnees_importees)
@@ -43,6 +46,7 @@ def calcul_eau(donnees):
      sheet["A1"] = "eau"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
+     afficher_graphique()
 def executer_eau():
      donnees_importees = import_excel()
      calcul_eau(donnees_importees)
@@ -57,6 +61,7 @@ def calcul_air(donnees):
      sheet["A1"] = "air"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
+     afficher_graphique()
 def executer_air():
      donnees_importees = import_excel()
      calcul_air(donnees_importees)
@@ -78,6 +83,27 @@ def afficher_excel():
             value = cell.value
             text_pre.insert(tk.END, f"{value}\t")
         text_pre.insert(tk.END, "\n")
+
+
+# Afficher le graphique
+def afficher_graphique():
+    largeur = fenetre.winfo_screenwidth()
+    hauteur = fenetre.winfo_screenheight()
+    #on charge le fichier excel
+    workbook = load_workbook(filename="value.xlsx")
+    #on ouvre le fichier excel
+    sheet = workbook.active
+    #on dessine le graphique avec x la 1ere colonne et y la 2eme colonne
+    x = []
+    y = []
+    for row in sheet.iter_rows(min_row=2):
+        x.append(row[0].value)
+        y.append(row[1].value)
+    fig = plt.figure(figsize=(5, 5))
+    plt.plot(x, y)
+    canvas = FigureCanvasTkAgg(fig, master=fenetre)
+    canvas.get_tk_widget().place(relx=0.6, rely=0.05, width=largeur/3, height=hauteur/3)
+    canvas.draw()
 
 
 # Fonction pour changer le theme
