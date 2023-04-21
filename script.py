@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter.filedialog import *
 import tkinter as tk
 import matplotlib.pyplot as plt
+import os
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
@@ -103,7 +104,10 @@ def afficher_graphique():
     plt.plot(x, y)
     canvas = FigureCanvasTkAgg(fig, master=fenetre)
     canvas.get_tk_widget().place(relx=0.6, rely=0.05, width=largeur/3, height=hauteur/3)
+    #on met des bordures épaisses noire
+    canvas.get_tk_widget().config(highlightthickness=1, highlightbackground="black")
     canvas.draw()
+
 
 
 # Fonction pour changer le theme
@@ -122,8 +126,12 @@ def toggle():
         label_select.pack()
         resultat_label.config(bg="#26242f", fg="white")
         resultat_label.pack()
-        text_pre.config(bg="grey15", fg="white")
+        text_pre.config(bg="black", fg="white") #bg ="grey15"
         text_pre.pack()
+        #couleur du graphique
+        plt.style.use('dark_background')
+        if os.path.exists("value.xlsx"):
+          afficher_graphique()
     else:
         switch.config(image=light, bg="white", 
                       activebackground="white")
@@ -139,6 +147,11 @@ def toggle():
         resultat_label.pack()
         text_pre.config(bg="white", fg="black")
         text_pre.pack()
+        #couleur du graphique
+        plt.style.use('default')
+        if os.path.exists("value.xlsx"):
+          afficher_graphique()
+        
 
 
 
