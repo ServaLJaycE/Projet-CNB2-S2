@@ -5,6 +5,7 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 import os
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from PIL import ImageTk, Image #1
 
 
 
@@ -109,7 +110,6 @@ def afficher_graphique():
     canvas.draw()
 
 
-
 # Fonction pour changer le theme
 def toggle():
     global switch_value
@@ -122,12 +122,28 @@ def toggle():
         #modifie couleur des textes
         label_titre.config(bg="#26242f", fg="white")
         label_titre.pack()
-        label_select.config(bg="#26242f", fg="white")
-        label_select.pack()
+        label_select1.config(bg="#26242f", fg="white")
+        label_select1.pack()
+        label_select2.config(bg="#26242f", fg="white")
+        label_select2.pack()
+        sandy_label.config(bg="#26242f", fg="white")
+        sandy_label.pack()
+        loam_label.config(bg="#26242f", fg="white")
+        loam_label.pack()
+        clay_label.config(bg="#26242f", fg="white")
+        clay_label.pack()
         resultat_label.config(bg="#26242f", fg="white")
         resultat_label.pack()
         text_pre.config(bg="black", fg="white") #bg ="grey15"
         text_pre.pack()
+        cadre_utilisateur.config(bg="#26242f")
+        cadre_utilisateur.pack(side="left",anchor="nw",padx=0, pady=(30,0))
+        cadre_resultat.config(bg="#26242f")
+        cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
+        cadre_sol.config(bg="#26242f")
+        cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
+        cadre_boutons.config(bg="#26242f")
+        cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
         #couleur du graphique
         plt.style.use('dark_background')
         if os.path.exists("value.xlsx"):
@@ -141,23 +157,61 @@ def toggle():
         #modifie couleur des textes
         label_titre.config(bg="white", fg="black")
         label_titre.pack()
-        label_select.config(bg="white", fg="black")
-        label_select.pack()
+        label_select1.config(bg="white", fg="black")
+        label_select1.pack()
+        label_select2.config(bg="white", fg="black")
+        label_select2.pack()
+        sandy_label.config(bg="white", fg="black")
+        sandy_label.pack()
+        clay_label.config(bg="white", fg="black")
+        clay_label.pack()
+        loam_label.config(bg="white", fg="black")
+        loam_label.pack()
         resultat_label.config(bg="white", fg="black")
         resultat_label.pack()
         text_pre.config(bg="white", fg="black")
         text_pre.pack()
+        cadre_utilisateur.config(bg="white")
+        cadre_utilisateur.pack(side="left",anchor="nw",padx=0, pady=(30,0))
+        cadre_resultat.config(bg="white")
+        cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
+        cadre_sol.config(bg="white")
+        cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
+        cadre_boutons.config(bg="white")
+        cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
         #couleur du graphique
         plt.style.use('default')
         if os.path.exists("value.xlsx"):
           afficher_graphique()
+
+
+# Définition de la fonction pour récupérer les valeurs entrées par l'utilisateur #2
+def recup_valeurs():
+    sandy = float(sandy_entry.get())
+    clay = float(clay_entry.get())
+    loam = float(loam_entry.get())
+    tracer_barres(sandy, clay, loam)
+
+
+#Fonction pour dessiner les barres #3
+def tracer_barres(sandy, clay, loam):
+    x1 = 2.5*(clay/2)
+    y1 = 2.5*(100 - clay)
+    x2 = 2.5*(0.5*loam +50)
+    y2 = 2.5*(loam)
+    x3 = 2.5*(100-sandy)
+    y3 = 2.5*(100)
+    canvas.create_line(x1, y1, 2.5*100, y1, fill="red", width=3) #clay
+    canvas.create_line(x2, y2, 2.5*-900, 2.5*2000, fill="blue", width=3) #loam
+    canvas.create_line(x3, y3, 2.5*-10000, 2.5*-20000, fill="green", width=3)
         
 
 
 
 
-
 #On met le code principal :
+
+
 
 
 
@@ -191,52 +245,100 @@ label_titre = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="blac
 label_titre.pack()
 
 
-#zone de texte
-##texte = Text(fenetre, width=largeur, height=hauteur)
-#on definit la taille de la zone de texte
-##texte.config(width=15, height=1)
-##texte.pack()
-#on pre-ecrit du texte dans la zone de texte
-##texte.insert(END, "nom du fichier")
+#Les deux cadres principaux 
+cadre_utilisateur = tk.Frame(fenetre)
+cadre_utilisateur.config(bg="white")
+cadre_utilisateur.pack(side="left",anchor="nw",padx=0, pady=(30,0))
 
-#bouton qui lance l'importation seulement quand on appuie dessus
-#boutton = Button(fenetre, text="Importer", command=import_excel)
-#boutton.pack()
- 
+cadre_resultat = tk.Frame(fenetre)
+cadre_resultat.config(bg="white")
+cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
 
-#titre
-label_select = Label(fenetre, text="Selectionez votre type de sol :", bg="white", fg="black")
-label_select.pack(anchor="w", padx=10, pady=20)
+# Cadre pourcentage de sol
+cadre_sol = tk.Frame(cadre_utilisateur)
+cadre_sol.config(bg="white")
+cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
 
+# Cadre pour les boutons de choix de sol
+cadre_boutons = tk.Frame(cadre_utilisateur)
+cadre_boutons.config(bg="white")
+cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
+
+# Cadre pour image triangle des sols
+cadre_image = tk.Frame(cadre_resultat)
+cadre_image.pack(side="top", padx=(10,500), pady=10)
+
+
+
+#titre de la zone de choix des pourcentages
+label_select1 = Label(cadre_sol, text="Trouvez votre type de sol :", bg="white", fg="black")
+label_select1.pack(anchor="w", padx=10, pady=20)
+
+# Création des boîtes pour entrer les valeurs en pourcentage
+sandy_label = tk.Label(cadre_sol, text="Sable (en %) :")
+sandy_label.pack()
+sandy_entry = tk.Entry(cadre_sol)
+sandy_entry.pack()
+
+clay_label = tk.Label(cadre_sol, text="Argile (en %) :")
+clay_label.pack()
+clay_entry = tk.Entry(cadre_sol)
+clay_entry.pack()
+
+loam_label = tk.Label(cadre_sol, text="Limon (en %) :")
+loam_label.pack()
+loam_entry = tk.Entry(cadre_sol)
+loam_entry.pack()
+
+# Création du bouton pour lancer l'affichage des barres sur l'image
+valider_button = tk.Button(cadre_sol, text="Valider", command=recup_valeurs)
+valider_button.pack()
+
+
+
+#titre de la zone bouton de choix de sol
+label_select2 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg="white", fg="black")
+label_select2.pack(anchor="w", padx=10, pady=20)
 
 #bouton importattion terre
-boutton_t = Button(fenetre, text="terre", command=executer_terre)
+boutton_t = Button(cadre_boutons, text="terre", command=executer_terre)
 boutton_t.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion eau
-boutton_e = Button(fenetre, text="eau", command=executer_eau )
+boutton_e = Button(cadre_boutons, text="eau", command=executer_eau )
 boutton_e.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion air
-boutton_a = Button(fenetre, text="air",command=executer_air)
+boutton_a = Button(cadre_boutons, text="air",command=executer_air)
 boutton_a.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion feu
-boutton_f = Button(fenetre, text="feu")
+boutton_f = Button(cadre_boutons, text="feu")
 boutton_f.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion electrique
-boutton_el = Button(fenetre, text="electrique")
+boutton_el = Button(cadre_boutons, text="electrique")
 boutton_el.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion poison
-boutton_po = Button(fenetre, text="poison")
+boutton_po = Button(cadre_boutons, text="poison")
 boutton_po.pack(anchor="w", padx=10, pady=5)
 
-
 #état de la modification
-resultat_label = tk.Label(fenetre, text="état : ")
+resultat_label = tk.Label(cadre_boutons, text="état : ")
 resultat_label.pack(anchor="w", padx=90, pady=20)
+
+
+
+# Chargement de l'image du triangle des sols
+img = Image.open("img.png")
+img = img.resize((250, 250), Image.ANTIALIAS)
+img = ImageTk.PhotoImage(img)
+# Création du canevas pour afficher l'image
+canvas = tk.Canvas(cadre_image, width=250, height=250)
+canvas.pack(side="top")
+canvas.create_image(0, 0, anchor=tk.NW, image=img)
+
 
 
 #Bouton de preview du nouveau fichier excel
@@ -255,6 +357,7 @@ scrollbar_x.pack(side="bottom", fill="x", padx=20, pady=5)
 text_pre.pack(expand=True, padx=(20,10), pady=5)
 
   
+
 # Bouton pour changer le theme
 switch = Button(fenetre, image=light, 
                 bd=0, bg="white",
@@ -263,6 +366,8 @@ switch = Button(fenetre, image=light,
 switch.pack(padx=50, pady=150)
 #on le place en haut a droite
 switch.place(x=0, y=0)
+
+
 
 
 
