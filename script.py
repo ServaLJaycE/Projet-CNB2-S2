@@ -70,22 +70,25 @@ def executer_air():
      resultat="fin"
      resultat_label.configure(text="état : " + str(resultat))
 
-def calcul_perso(donnees):
-    alpha=float(valeur_alpha.get())
-    beta=float(valeur_beta.get())
-    omega=float(valeur_omega.get())
-    calcul_perso2(alpha,beta,omega,donnees)
-def calcul_perso2(alpha,beta,omega,donnees):
+def calcul_perso(alpha,beta,omega,donnees):
+    workbook=load_workbook(filename=donnees)
+    #on ouvre le fichier excel
+    sheet=workbook.active
+    #on modifie les cellules
     sheet["A1"]=alpha
     sheet["A2"]=beta
     sheet["A3"]=omega
+    #on sauvegarde lefichier
     workbook.save(filename="value.xlsx")
-    afficher_graphique()
+    afficher_graphique
 def executer_perso():
+    alpha = float(valeur_alpha.get())
+    beta = float(valeur_beta.get())
+    omega = float(valeur_omega.get())
     donnees_importees=import_excel()
-    calcul_perso(donnees_importees)
+    calcul_perso(alpha,beta,omega,donnees_importees)
     resultat="fin"
-    resultat_label.configure(text="état : " + str(resultat))
+    resultat_label.configure(text="état : "+str(resultat))
 
 
 # Afficher le nouveau tableau excel
@@ -348,11 +351,11 @@ boutton_pers.pack(anchor="w", padx=10, pady=(15,5))
 valeurs_perso_label = tk.Label(cadre_boutons, text="Alpha   Beta    Omega",width=20, height=1)
 valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
 #Zone de texte pour entrer valeurs perso
-valeur_alpha = tk.Text(cadre_boutons,width=3, height=1)
+valeur_alpha = tk.Entry(cadre_boutons,width=3) #height=1
 valeur_alpha.pack(side="left", padx=(20,0), pady=(5,0))
-valeur_beta = tk.Text(cadre_boutons,width=3, height=1)
+valeur_beta = tk.Entry(cadre_boutons,width=3)
 valeur_beta.pack(side="left", padx=(10,0), pady=(5,0))
-valeur_omega = tk.Text(cadre_boutons,width=3, height=1)
+valeur_omega = tk.Entry(cadre_boutons,width=3)
 valeur_omega.pack(side="left", padx=(10,0), pady=(5,0))
 
 
