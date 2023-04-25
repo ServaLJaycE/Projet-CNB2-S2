@@ -80,7 +80,7 @@ def calcul_perso(alpha,beta,omega,donnees):
     sheet["A3"]=omega
     #on sauvegarde lefichier
     workbook.save(filename="value.xlsx")
-    afficher_graphique
+    afficher_graphique()
 def executer_perso():
     alpha = float(valeur_alpha.get())
     beta = float(valeur_beta.get())
@@ -104,7 +104,7 @@ def afficher_excel():
         for cell in row:
             value = cell.value
             text_pre.insert(tk.END, f"{value}\t")
-        text_pre.insert(tk.END, "\n")
+        text_pre.insert(tk.END, "\n")    
 
 
 # Afficher le graphique
@@ -164,6 +164,8 @@ def toggle():
         cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
         cadre_boutons.config(bg="#26242f")
         cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
+        valeurs_perso_label.config(bg="#26242f", fg="white")
+        valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
         #couleur du graphique
         plt.style.use('dark_background')
         if os.path.exists("value.xlsx"):
@@ -199,6 +201,8 @@ def toggle():
         cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
         cadre_boutons.config(bg="white")
         cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
+        valeurs_perso_label.config(bg="white", fg="black")
+        valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
         #couleur du graphique
         plt.style.use('default')
         if os.path.exists("value.xlsx"):
@@ -379,7 +383,7 @@ canvas.create_image(0, 0, anchor=tk.NW, image=img)
 
 
 
-#Bouton de preview du nouveau fichier excel
+#Bouton de preview du nouveau fichier excel 
 button_pre = Button(fenetre, text="Afficher les valeurs", command=afficher_excel)
 button_pre.pack()
 
