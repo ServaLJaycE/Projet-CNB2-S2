@@ -70,6 +70,23 @@ def executer_air():
      resultat="fin"
      resultat_label.configure(text="état : " + str(resultat))
 
+def calcul_perso(donnees):
+    alpha=float(valeur_alpha.get())
+    beta=float(valeur_beta.get())
+    omega=float(valeur_omega.get())
+    calcul_perso2(alpha,beta,omega,donnees)
+def calcul_perso2(alpha,beta,omega,donnees):
+    sheet["A1"]=alpha
+    sheet["A2"]=beta
+    sheet["A3"]=omega
+    workbook.save(filename="value.xlsx")
+    afficher_graphique()
+def executer_perso():
+    donnees_importees=import_excel()
+    calcul_perso(donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : " + str(resultat))
+
 
 # Afficher le nouveau tableau excel
 def afficher_excel():
@@ -324,9 +341,27 @@ boutton_el.pack(anchor="w", padx=10, pady=5)
 boutton_po = Button(cadre_boutons, text="poison")
 boutton_po.pack(anchor="w", padx=10, pady=5)
 
+#bouton importattion valeurs perso
+boutton_pers= Button(cadre_boutons, text="valeurs précises",command=executer_perso)
+boutton_pers.pack(anchor="w", padx=10, pady=(15,5))
+#Indication zone de texte valeurs perso
+valeurs_perso_label = tk.Label(cadre_boutons, text="Alpha   Beta    Omega",width=20, height=1)
+valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
+#Zone de texte pour entrer valeurs perso
+valeur_alpha = tk.Text(cadre_boutons,width=3, height=1)
+valeur_alpha.pack(side="left", padx=(20,0), pady=(5,0))
+valeur_beta = tk.Text(cadre_boutons,width=3, height=1)
+valeur_beta.pack(side="left", padx=(10,0), pady=(5,0))
+valeur_omega = tk.Text(cadre_boutons,width=3, height=1)
+valeur_omega.pack(side="left", padx=(10,0), pady=(5,0))
+
+
+
+
 #état de la modification
-resultat_label = tk.Label(cadre_boutons, text="état : ")
-resultat_label.pack(anchor="w", padx=90, pady=20)
+resultat_label=tk.Label(cadre_boutons,text="etat : ")
+resultat_label.pack(anchor="w",padx=90,pady=0)
+
 
 
 
