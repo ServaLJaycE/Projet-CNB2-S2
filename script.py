@@ -352,11 +352,11 @@ valeurs_perso_label = tk.Label(cadre_boutons, text="Alpha   Beta    Omega",width
 valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
 #Zone de texte pour entrer valeurs perso
 valeur_alpha = tk.Entry(cadre_boutons,width=3) #height=1
-valeur_alpha.pack(side="left", padx=(20,0), pady=(5,0))
-valeur_beta = tk.Entry(cadre_boutons,width=3)
-valeur_beta.pack(side="left", padx=(10,0), pady=(5,0))
+valeur_alpha.pack(side="left",ipadx=4, padx=(25,0), pady=(5,0))
+valeur_beta = tk.Entry(cadre_boutons, width=3)
+valeur_beta.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
 valeur_omega = tk.Entry(cadre_boutons,width=3)
-valeur_omega.pack(side="left", padx=(10,0), pady=(5,0))
+valeur_omega.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
 
 
 
