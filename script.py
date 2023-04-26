@@ -33,7 +33,6 @@ def calcul_terre(donnees):
      sheet["A1"] = "terre"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
-     afficher_graphique()
 def executer_terre():
      donnees_importees = import_excel()
      calcul_terre(donnees_importees)
@@ -48,7 +47,6 @@ def calcul_eau(donnees):
      sheet["A1"] = "eau"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
-     afficher_graphique()
 def executer_eau():
      donnees_importees = import_excel()
      calcul_eau(donnees_importees)
@@ -63,7 +61,6 @@ def calcul_air(donnees):
      sheet["A1"] = "air"
      #on sauvegarde le fichier
      workbook.save(filename="value.xlsx")
-     afficher_graphique()
 def executer_air():
      donnees_importees = import_excel()
      calcul_air(donnees_importees)
@@ -80,7 +77,6 @@ def calcul_perso(alpha,beta,omega,donnees):
     sheet["A3"]=omega
     #on sauvegarde lefichier
     workbook.save(filename="value.xlsx")
-    afficher_graphique()
 def executer_perso():
     #essayer d'executer ses lignes sinon ..
     try :
@@ -132,6 +128,12 @@ def afficher_graphique():
     #on met des bordures épaisses noire
     canvas.get_tk_widget().config(highlightthickness=1, highlightbackground="black")
     canvas.draw()
+
+
+#Afficher graphique et excel
+def afficher():
+    afficher_excel()
+    afficher_graphique()
 
 
 # Fonction pour changer le theme
@@ -393,7 +395,7 @@ canvas.create_image(0, 0, anchor=tk.NW, image=img)
 
 
 #Bouton de preview du nouveau fichier excel 
-button_pre = Button(fenetre, text="Afficher les valeurs", command=afficher_excel)
+button_pre = Button(fenetre, text="Afficher les valeurs", command=afficher)
 button_pre.pack()
 
 
