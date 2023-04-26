@@ -5,7 +5,7 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 import os
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from PIL import ImageTk, Image #1
+from PIL import ImageTk, Image 
 
 
 
@@ -82,13 +82,17 @@ def calcul_perso(alpha,beta,omega,donnees):
     workbook.save(filename="value.xlsx")
     afficher_graphique()
 def executer_perso():
-    alpha = float(valeur_alpha.get())
-    beta = float(valeur_beta.get())
-    omega = float(valeur_omega.get())
-    donnees_importees=import_excel()
-    calcul_perso(alpha,beta,omega,donnees_importees)
-    resultat="fin"
-    resultat_label.configure(text="état : "+str(resultat))
+    #essayer d'executer ses lignes sinon ..
+    try :
+        alpha = float(valeur_alpha.get())
+        beta = float(valeur_beta.get())
+        omega = float(valeur_omega.get())
+        donnees_importees=import_excel()
+        calcul_perso(alpha,beta,omega,donnees_importees)
+        resultat="fin"
+        resultat_label.configure(text="état : "+str(resultat))
+    except:
+        os.system("alerte_val_perso.vbs")
 
 
 # Afficher le nouveau tableau excel
@@ -219,15 +223,20 @@ def recup_valeurs():
 
 #Fonction pour dessiner les barres #3
 def tracer_barres(sandy, clay, loam):
-    x1 = 2.5*(clay/2)
-    y1 = 2.5*(100 - clay)
-    x2 = 2.5*(0.5*loam +50)
-    y2 = 2.5*(loam)
-    x3 = 2.5*(100-sandy)
-    y3 = 2.5*(100)
-    canvas.create_line(x1, y1, 2.5*100, y1, fill="red", width=3) #clay
-    canvas.create_line(x2, y2, 2.5*-900, 2.5*2000, fill="blue", width=3) #loam
-    canvas.create_line(x3, y3, 2.5*-10000, 2.5*-20000, fill="green", width=3)
+    if (sandy+clay+loam) != 100:
+        #on run l'alerte_triangle_sol.vbs
+        os.system("alerte_triangle.vbs")
+    else :
+        #on trace les traits
+        x1 = 2.5*(clay/2)
+        y1 = 2.5*(100 - clay)
+        x2 = 2.5*(0.5*loam +50)
+        y2 = 2.5*(loam)
+        x3 = 2.5*(100-sandy)
+        y3 = 2.5*(100)
+        canvas.create_line(x1, y1, 2.5*100, y1, fill="red", width=3) #clay
+        canvas.create_line(x2, y2, 2.5*-900, 2.5*2000, fill="blue", width=3) #loam
+        canvas.create_line(x3, y3, 2.5*-10000, 2.5*-20000, fill="green", width=3)
         
 
 
