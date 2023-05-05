@@ -4,6 +4,8 @@ from tkinter.filedialog import *
 import tkinter as tk
 import matplotlib.pyplot as plt
 import os
+import csv
+import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import ImageTk, Image 
 
@@ -15,124 +17,280 @@ from PIL import ImageTk, Image
 
 
 #Fonction pour modifier le excel
-def import_excel():
+#def import_excel():
     #on charge le fichier excel
     ##nom_fichier = texte.get("1.0", "end-1c")
     ##nom_fichier = nom_fichier + ".xlsx"
     ##workbook = load_workbook(filename=nom_fichier)
-    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
-    return donnees_importees
+    #donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
+    #return donnees_importees
   
 
 #Les fonction de calcul
-def calcul_terre(donnees):
-     workbook = load_workbook(filename=donnees)
-     #on ouvre le fichier excel
-     sheet = workbook.active
-     #on modifie la cellule A1
-     sheet["A1"] = "terre"
-     #on sauvegarde le fichier
-     workbook.save(filename="value.xlsx")
-def executer_terre():
-     donnees_importees = import_excel()
-     calcul_terre(donnees_importees)
-     resultat="fin"
-     resultat_label.configure(text="état : " + str(resultat))
+def calcul_sable(tableau):
+          #ouverture du csv en mode lecture
+    with open(tableau, 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    #extrait l'entete du csv
+    entetes = donnees[0]
+    #créée variable de stockage
+    new_entetes = []
+    new_donnees = []
+    #On rajoute "HygroTrue_" devant chaque "Hygro_"
+    for entete in entetes:
+        new_entetes.append(entete)
+        if entete.startswith("Hygro_"):
+            num = entete.split("_")[1]
+            new_entetes.append("HygroTrue_" + num)
+    #On duplique les "Hygro_" en modifiant les valeurs
+    for i in range(1, len(donnees)):
+        ligne = donnees[i]
+        new_ligne = []
+        for j in range(len(ligne)):
+            new_ligne.append(ligne[j])
+            if entetes[j].startswith("Hygro_"):
+                new_ligne.append(str(float(ligne[j])*0.4853 - 10.836))
+        new_donnees.append(new_ligne)
+def executer_sable():
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+    calcul_sable(donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : " + str(resultat))
 
-def calcul_eau(donnees):
-     workbook = load_workbook(filename=donnees)
-     #on ouvre le fichier excel
-     sheet = workbook.active
-     #on modifie la cellule A1
-     sheet["A1"] = "eau"
-     #on sauvegarde le fichier
-     workbook.save(filename="value.xlsx")
-def executer_eau():
-     donnees_importees = import_excel()
-     calcul_eau(donnees_importees)
-     resultat="fin"
-     resultat_label.configure(text="état : " + str(resultat))
+def calcul_limon_sableux(tableau):
+     #ouverture du csv en mode lecture
+    with open(tableau, 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    #extrait l'entete du csv
+    entetes = donnees[0]
+    #créée variable de stockage
+    new_entetes = []
+    new_donnees = []
+    #On rajoute "HygroTrue_" devant chaque "Hygro_"
+    for entete in entetes:
+        new_entetes.append(entete)
+        if entete.startswith("Hygro_"):
+            num = entete.split("_")[1]
+            new_entetes.append("HygroTrue_" + num)
+    #On duplique les "Hygro_" en modifiant les valeurs
+    for i in range(1, len(donnees)):
+        ligne = donnees[i]
+        new_ligne = []
+        for j in range(len(ligne)):
+            new_ligne.append(ligne[j])
+            if entetes[j].startswith("Hygro_"):
+                new_ligne.append(str(float(ligne[j])*0.2072 + 11.107))
+        new_donnees.append(new_ligne)
+    #on écrit le nouveau csv avec nos variables de stockage
+    with open("neww.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerow(new_entetes)
+        writer.writerows(new_donnees)
+def executer_limon_sableux():
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+    calcul_limon_sableux(donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : " + str(resultat))
 
-def calcul_air(donnees):
-     workbook = load_workbook(filename=donnees)
-     #on ouvre le fichier excel
-     sheet = workbook.active
-     #on modifie la cellule A1
-     sheet["A1"] = "air"
-     #on sauvegarde le fichier
-     workbook.save(filename="value.xlsx")
-def executer_air():
-     donnees_importees = import_excel()
-     calcul_air(donnees_importees)
-     resultat="fin"
-     resultat_label.configure(text="état : " + str(resultat))
+def calcul_limon_argileux(tableau):
+    #ouverture du csv en mode lecture
+    with open(tableau, 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    #extrait l'entete du csv
+    entetes = donnees[0]
+    #créée variable de stockage
+    new_entetes = []
+    new_donnees = []
+    #On rajoute "HygroTrue_" devant chaque "Hygro_"
+    for entete in entetes:
+        new_entetes.append(entete)
+        if entete.startswith("Hygro_"):
+            num = entete.split("_")[1]
+            new_entetes.append("HygroTrue_" + num)
+    #On duplique les "Hygro_" en modifiant les valeurs
+    for i in range(1, len(donnees)):
+        ligne = donnees[i]
+        new_ligne = []
+        for j in range(len(ligne)):
+            new_ligne.append(ligne[j])
+            if entetes[j].startswith("Hygro_"):
+                new_ligne.append(str(float(ligne[j])*0.5052 - 14.891))
+        new_donnees.append(new_ligne)
+    #on écrit le nouveau csv avec nos variables de stockage
+    with open("neww.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerow(new_entetes)
+        writer.writerows(new_donnees)
+def executer_limon_argileux():
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+    calcul_limon_argileux(donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : " + str(resultat))
 
-def calcul_perso(alpha,beta,omega,donnees):
-    workbook=load_workbook(filename=donnees)
-    #on ouvre le fichier excel
-    sheet=workbook.active
-    #on modifie les cellules
-    sheet["A1"]=alpha
-    sheet["A2"]=beta
-    sheet["A3"]=omega
-    #on sauvegarde lefichier
-    workbook.save(filename="value.xlsx")
+def calcul_argile_sableux(tableau):
+    #ouverture du csv en mode lecture
+    with open(tableau, 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    #extrait l'entete du csv
+    entetes = donnees[0]
+    #créée variable de stockage
+    new_entetes = []
+    new_donnees = []
+    #On rajoute "HygroTrue_" devant chaque "Hygro_"
+    for entete in entetes:
+        new_entetes.append(entete)
+        if entete.startswith("Hygro_"):
+            num = entete.split("_")[1]
+            new_entetes.append("HygroTrue_" + num)
+    #On duplique les "Hygro_" en modifiant les valeurs
+    for i in range(1, len(donnees)):
+        ligne = donnees[i]
+        new_ligne = []
+        for j in range(len(ligne)):
+            new_ligne.append(ligne[j])
+            if entetes[j].startswith("Hygro_"):
+                new_ligne.append(str(float(ligne[j])*0.2305 + 7.3944))
+        new_donnees.append(new_ligne)
+    #on écrit le nouveau csv avec nos variables de stockage
+    with open("neww.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerow(new_entetes)
+        writer.writerows(new_donnees)
+def executer_argile_sableux():
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+    calcul_limon_argileux(donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : " + str(resultat))
+
+def calcul_generique(tableau):
+        #ouverture du csv en mode lecture
+    with open(tableau, 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    #extrait l'entete du csv
+    entetes = donnees[0]
+    #créée variable de stockage
+    new_entetes = []
+    new_donnees = []
+    #On rajoute "HygroTrue_" devant chaque "Hygro_"
+    for entete in entetes:
+        new_entetes.append(entete)
+        if entete.startswith("Hygro_"):
+            num = entete.split("_")[1]
+            new_entetes.append("HygroTrue_" + num)
+    #On duplique les "Hygro_" en modifiant les valeurs
+    for i in range(1, len(donnees)):
+        ligne = donnees[i]
+        new_ligne = []
+        for j in range(len(ligne)):
+            new_ligne.append(ligne[j])
+            if entetes[j].startswith("Hygro_"):
+                new_ligne.append(str(float(ligne[j])*0.2689 + 3.4664))
+        new_donnees.append(new_ligne)
+    #on écrit le nouveau csv avec nos variables de stockage
+    with open("neww.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerow(new_entetes)
+        writer.writerows(new_donnees)
+def executer_generique():
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+    calcul_limon_argileux(donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : " + str(resultat))
+
+def calcul_perso(alpha,beta,omega,tableau):
+        #ouverture du csv en mode lecture
+    with open(tableau, 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    #extrait l'entete du csv
+    entetes = donnees[0]
+    #créée variable de stockage
+    new_entetes = []
+    new_donnees = []
+    #On rajoute "HygroTrue_" devant chaque "Hygro_"
+    for entete in entetes:
+        new_entetes.append(entete)
+        if entete.startswith("Hygro_"):
+            num = entete.split("_")[1]
+            new_entetes.append("HygroTrue_" + num)
+    #On duplique les "Hygro_" en modifiant les valeurs
+    for i in range(1, len(donnees)):
+        ligne = donnees[i]
+        new_ligne = []
+        for j in range(len(ligne)):
+            new_ligne.append(ligne[j])
+            if entetes[j].startswith("Hygro_"):
+                new_ligne.append(str(float(ligne[j])*beta + alpha))
+        new_donnees.append(new_ligne)
+    #on écrit le nouveau csv avec nos variables de stockage
+    with open("neww.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerow(new_entetes)
+        writer.writerows(new_donnees)
 def executer_perso():
     #essayer d'executer ses lignes sinon ..
-    try :
-        alpha = float(valeur_alpha.get())
-        beta = float(valeur_beta.get())
-        omega = float(valeur_omega.get())
-        donnees_importees=import_excel()
-        calcul_perso(alpha,beta,omega,donnees_importees)
-        resultat="fin"
-        resultat_label.configure(text="état : "+str(resultat))
-    except:
-        os.system("alerte_val_perso.vbs")
+    #try :
+    alpha = float(valeur_alpha.get())
+    beta = float(valeur_beta.get())
+    omega = float(valeur_omega.get())
+    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+    calcul_perso(alpha,beta,omega,donnees_importees)
+    resultat="fin"
+    resultat_label.configure(text="état : "+str(resultat))
+    #except:
+        #os.system("alerte_val_perso.vbs")
 
 
-# Afficher le nouveau tableau excel
-def afficher_excel():
-     #on charge le fichier excel
-     workbook = load_workbook("value.xlsx")
-     #on ouvre le fichier excel
-     sheet = workbook.active
-     #on vide la zone de texte
-     text_pre.delete("1.0", "end-1c")
-     #on affiche tout le tableau
-     for row in sheet.iter_rows():
-        for cell in row:
-            value = cell.value
-            text_pre.insert(tk.END, f"{value}\t")
-        text_pre.insert(tk.END, "\n")    
+# Afficher le nouveau tableau
+def afficher_tab():
+    #on affiche neww.csv dans text.insert en separant les colonnes par des ;
+    with open("neww.csv", 'r') as f:
+        donnees = list(csv.reader(f, delimiter=";"))
+    text_pre.delete(1.0, END)
+    for ligne in donnees:
+        text_pre.insert(END, ligne)
+        text_pre.insert(END, "\n")   
 
 
 # Afficher le graphique
 def afficher_graphique():
     largeur = fenetre.winfo_screenwidth()
     hauteur = fenetre.winfo_screenheight()
-    #on charge le fichier excel
-    workbook = load_workbook(filename="value.xlsx")
-    #on ouvre le fichier excel
-    sheet = workbook.active
-    #on dessine le graphique avec x la 1ere colonne et y la 2eme colonne
-    x = []
-    y = []
-    for row in sheet.iter_rows(min_row=2):
-        x.append(row[0].value)
-        y.append(row[1].value)
-    fig = plt.figure(figsize=(5, 5))
-    plt.plot(x, y)
+    # Charger le fichier csv
+    df = pd.read_csv('neww.csv', sep=';')
+    # Créer un dictionnaire pour stocker les valeurs de température et d'humidité
+    data = {}
+    for i in range(10, 70, 10):
+        data['Temp_'+str(i)] = []
+        data['HygroTrue_'+str(i)] = []
+    # Parcourir les colonnes de température et d'humidité, et ajouter les valeurs correspondantes au dictionnaire
+    for col in df.columns:
+        if 'Temp_' in col:
+            for i, val in enumerate(df[col]):
+                data[col].append(val)
+        elif 'HygroTrue_' in col:
+            for i, val in enumerate(df[col]):
+                data[col].append(val)
+    # Créer une figure et ajouter les sous-plots pour chaque paire de colonnes Temp_ et HygroTrue_
+    fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 10))
+    plt.subplots_adjust(wspace=0.5, hspace=1)
+    # Pour chaque sous-plot, tracer les points (Temp_, HygroTrue_)
+    for i, ax in enumerate(axs.flat):
+        col_temp = 'Temp_'+str((i+1)*10)
+        col_hygro = 'HygroTrue_'+str((i+1)*10)
+        ax.plot(data[col_temp], data[col_hygro], 'o')
+        ax.set_ylabel(col_hygro, fontsize=6)
+        ax.set_xlabel(col_temp, fontsize=6)
+        ax.xaxis.set_label_coords(0.5, -0.5)
+    # Ajouter le graphique à la fenêtre Tkinter
     canvas = FigureCanvasTkAgg(fig, master=fenetre)
-    canvas.get_tk_widget().place(relx=0.6, rely=0.05, width=largeur/3, height=hauteur/3)
-    #on met des bordures épaisses noire
+    canvas.get_tk_widget().place(relx=0.6, rely=0.05, width=largeur/2.8, height=hauteur/2.8)
     canvas.get_tk_widget().config(highlightthickness=1, highlightbackground="black")
     canvas.draw()
 
 
 #Afficher graphique et excel
 def afficher():
-    afficher_excel()
+    afficher_tab()
     afficher_graphique()
 
 
@@ -174,7 +332,7 @@ def toggle():
         valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
         #couleur du graphique
         plt.style.use('dark_background')
-        if os.path.exists("value.xlsx"):
+        if os.path.exists("neww.csv"):
           afficher_graphique()
     else:
         switch.config(image=light, bg="white", 
@@ -211,7 +369,7 @@ def toggle():
         valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
         #couleur du graphique
         plt.style.use('default')
-        if os.path.exists("value.xlsx"):
+        if os.path.exists("neww.csv"):
           afficher_graphique()
 
 
@@ -336,28 +494,28 @@ label_select2 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg=
 label_select2.pack(anchor="w", padx=10, pady=20)
 
 #bouton importattion terre
-boutton_t = Button(cadre_boutons, text="terre", command=executer_terre)
-boutton_t.pack(anchor="w", padx=10, pady=5)
+boutton_e = Button(cadre_boutons, text="Limon sableux", command=executer_sable)
+boutton_e.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion eau
-boutton_e = Button(cadre_boutons, text="eau", command=executer_eau )
+boutton_e = Button(cadre_boutons, text="Limon sableux", command=executer_limon_sableux)
 boutton_e.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion air
-boutton_a = Button(cadre_boutons, text="air",command=executer_air)
+boutton_a = Button(cadre_boutons, text="Limon argileux",command=executer_limon_argileux)
 boutton_a.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion feu
-boutton_f = Button(cadre_boutons, text="feu")
+boutton_f = Button(cadre_boutons, text="Argile sableux",command=executer_argile_sableux)
 boutton_f.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion electrique
-boutton_el = Button(cadre_boutons, text="electrique")
+boutton_el = Button(cadre_boutons, text="Generique",command=executer_generique)
 boutton_el.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion poison
-boutton_po = Button(cadre_boutons, text="poison")
-boutton_po.pack(anchor="w", padx=10, pady=5)
+#boutton_po = Button(cadre_boutons, text="poison")
+#boutton_po.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion valeurs perso
 boutton_pers= Button(cadre_boutons, text="valeurs précises",command=executer_perso)
@@ -400,7 +558,7 @@ button_pre.pack()
 
 
 #zone de texte preview
-text_pre = tk.Text(fenetre, width=largeur//3, height=hauteur//3)
+text_pre = tk.Text(fenetre, width=largeur//3, height=hauteur//3, wrap="none")
 scrollbar_y = tk.Scrollbar(fenetre, orient="vertical", command=text_pre.yview)
 scrollbar_x = tk.Scrollbar(fenetre, orient="horizontal", command=text_pre.xview)
 text_pre.configure(yscrollcommand=scrollbar_y.set, xscrollcommand=scrollbar_x.set)
