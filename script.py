@@ -586,5 +586,6 @@ switch.place(x=0, y=0)
 fenetre.attributes('-fullscreen', True)
 
 fenetre.mainloop()
+#FIN
 
 
