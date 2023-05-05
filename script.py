@@ -51,6 +51,11 @@ def calcul_sable(tableau):
             if entetes[j].startswith("Hygro_"):
                 new_ligne.append(str(float(ligne[j])*0.4853 - 10.836))
         new_donnees.append(new_ligne)
+    #on écrit le nouveau csv avec nos variables de stockage
+    with open("neww.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerow(new_entetes)
+        writer.writerows(new_donnees)
 def executer_sable():
     donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
     calcul_sable(donnees_importees)
@@ -253,40 +258,31 @@ def afficher_tab():
 
 # Afficher le graphique
 def afficher_graphique():
-    largeur = fenetre.winfo_screenwidth()
-    hauteur = fenetre.winfo_screenheight()
-    # Charger le fichier csv
-    df = pd.read_csv('neww.csv', sep=';')
-    # Créer un dictionnaire pour stocker les valeurs de température et d'humidité
-    data = {}
-    for i in range(10, 70, 10):
-        data['Temp_'+str(i)] = []
-        data['HygroTrue_'+str(i)] = []
-    # Parcourir les colonnes de température et d'humidité, et ajouter les valeurs correspondantes au dictionnaire
-    for col in df.columns:
-        if 'Temp_' in col:
-            for i, val in enumerate(df[col]):
-                data[col].append(val)
-        elif 'HygroTrue_' in col:
-            for i, val in enumerate(df[col]):
-                data[col].append(val)
+    data=pd.read_csv("neww.csv",sep=";")
+    fig_width=10
+    fig_height=10 
+    font_size=6
     # Créer une figure et ajouter les sous-plots pour chaque paire de colonnes Temp_ et HygroTrue_
-    fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(10, 10))
+    fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(fig_width, fig_height))
     plt.subplots_adjust(wspace=0.5, hspace=1)
     # Pour chaque sous-plot, tracer les points (Temp_, HygroTrue_)
     for i, ax in enumerate(axs.flat):
         col_temp = 'Temp_'+str((i+1)*10)
         col_hygro = 'HygroTrue_'+str((i+1)*10)
+        hygro_data = data[col_hygro].values
+        hygro_min = hygro_data.min()
+        hygro_max = hygro_data.max()
+        hygro_abs_max = max(abs(hygro_min), abs(hygro_max))
         ax.plot(data[col_temp], data[col_hygro], 'o')
-        ax.set_ylabel(col_hygro, fontsize=6)
-        ax.set_xlabel(col_temp, fontsize=6)
+        ax.set_ylabel(col_hygro, fontsize=font_size)
+        ax.set_xlabel(col_temp, fontsize=font_size)
         ax.xaxis.set_label_coords(0.5, -0.5)
+        ax.set_ylim(-hygro_abs_max, hygro_abs_max)
     # Ajouter le graphique à la fenêtre Tkinter
     canvas = FigureCanvasTkAgg(fig, master=fenetre)
     canvas.get_tk_widget().place(relx=0.6, rely=0.05, width=largeur/2.8, height=hauteur/2.8)
     canvas.get_tk_widget().config(highlightthickness=1, highlightbackground="black")
     canvas.draw()
-
 
 #Afficher graphique et excel
 def afficher():
@@ -382,7 +378,12 @@ def recup_valeurs():
 
 
 #Fonction pour dessiner les barres #3
+lignes =[]
 def tracer_barres(sandy, clay, loam):
+    #on efface les anciennes barres
+    for ligne in lignes :
+        canvas.delete(ligne)
+    lignes.clear()
     if (sandy+clay+loam) != 100:
         #on run l'alerte_triangle_sol.vbs
         os.system("alerte_triangle.vbs")
@@ -394,9 +395,9 @@ def tracer_barres(sandy, clay, loam):
         y2 = 2.5*(loam)
         x3 = 2.5*(100-sandy)
         y3 = 2.5*(100)
-        canvas.create_line(x1, y1, 2.5*100, y1, fill="red", width=3) #clay
-        canvas.create_line(x2, y2, 2.5*-900, 2.5*2000, fill="blue", width=3) #loam
-        canvas.create_line(x3, y3, 2.5*-10000, 2.5*-20000, fill="green", width=3)
+        lignes.append(canvas.create_line(x1, y1, 2.5*100, y1, fill="red", width=3) )#clay
+        lignes.append(canvas.create_line(x2, y2, 2.5*-900, 2.5*2000, fill="blue", width=3)) #loam
+        lignes.append(canvas.create_line(x3, y3, 2.5*-10000, 2.5*-20000, fill="green", width=3))
         
 
 
@@ -549,7 +550,6 @@ img = ImageTk.PhotoImage(img)
 canvas = tk.Canvas(cadre_image, width=250, height=250)
 canvas.pack(side="top")
 canvas.create_image(0, 0, anchor=tk.NW, image=img)
-
 
 
 #Bouton de preview du nouveau fichier excel 
