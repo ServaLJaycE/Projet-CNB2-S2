@@ -28,7 +28,7 @@ from PIL import ImageTk, Image
 
 #Les fonction de calcul
 def calcul_sable(tableau):
-          #ouverture du csv en mode lecture
+    #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
     #extrait l'entete du csv
@@ -51,7 +51,7 @@ def calcul_sable(tableau):
             if entetes[j].startswith("Hygro_"):
                 new_ligne.append(str(float(ligne[j])*0.4853 - 10.836))
         new_donnees.append(new_ligne)
-    #on écrit le nouveau csv avec nos variables de stockage
+     #on écrit le nouveau csv avec nos variables de stockage
     with open("neww.csv", 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
@@ -63,7 +63,7 @@ def executer_sable():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_limon_sableux(tableau):
-     #ouverture du csv en mode lecture
+    #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
     #extrait l'entete du csv
@@ -168,7 +168,7 @@ def executer_argile_sableux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_generique(tableau):
-        #ouverture du csv en mode lecture
+    #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
     #extrait l'entete du csv
@@ -203,7 +203,7 @@ def executer_generique():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_perso(alpha,beta,omega,tableau):
-        #ouverture du csv en mode lecture
+    #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
     #extrait l'entete du csv
@@ -245,49 +245,72 @@ def executer_perso():
         #os.system("alerte_val_perso.vbs")
 
 
-# Afficher le nouveau tableau
+# Afficher le nouveau tableau excel
 def afficher_tab():
-    #on affiche neww.csv dans text.insert en separant les colonnes par des ;
     with open("neww.csv", 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
+    # Trouver la largeur maximale de chaque colonne
+    largeurs_colonnes = [max(len(element) for element in colonne) for colonne in zip(*donnees)]
+    #largeurs_colonnes =[10,10,10,10,10,10,etc..libre de modifier les valeurs et taille du tableau pour tester.] commentaire qui permet de comprendre ce que fait la ligne du dessus si besoin 
     text_pre.delete(1.0, END)
     for ligne in donnees:
-        text_pre.insert(END, ligne)
-        text_pre.insert(END, "\n")   
+        # Ajouter chaque élément de la ligne en ajustant la largeur
+        ligne_formatee = '  '.join(element.ljust(largeur) for element, largeur in zip(ligne, largeurs_colonnes))
+        #Ici la largeur va regarder tout le long de la ligne la plus grande taille pour chaque colonne de toute la colonne et avec ljust va rajouter des espaces jusqu'a que la case de la colonne écrite actuellement soit de la taille de la plus grande case de la colonne.
+        text_pre.insert(END, ligne_formatee)
+        text_pre.insert(END, "\n")
 
 
 # Afficher le graphique
-def afficher_graphique():
-    data=pd.read_csv("neww.csv",sep=";")
-    fig_width=10
-    fig_height=10 
-    font_size=6
-    # Créer une figure et ajouter les sous-plots pour chaque paire de colonnes Temp_ et HygroTrue_
-    fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(fig_width, fig_height))
-    plt.subplots_adjust(wspace=0.5, hspace=1)
-    # Pour chaque sous-plot, tracer les points (Temp_, HygroTrue_)
-    for i, ax in enumerate(axs.flat):
-        col_temp = 'Temp_'+str((i+1)*10)
-        col_hygro = 'HygroTrue_'+str((i+1)*10)
-        hygro_data = data[col_hygro].values
-        hygro_min = hygro_data.min()
-        hygro_max = hygro_data.max()
-        hygro_abs_max = max(abs(hygro_min), abs(hygro_max))
-        ax.plot(data[col_temp], data[col_hygro], 'o')
-        ax.set_ylabel(col_hygro, fontsize=font_size)
-        ax.set_xlabel(col_temp, fontsize=font_size)
-        ax.xaxis.set_label_coords(0.5, -0.5)
-        ax.set_ylim(-hygro_abs_max, hygro_abs_max)
-    # Ajouter le graphique à la fenêtre Tkinter
-    canvas = FigureCanvasTkAgg(fig, master=fenetre)
-    canvas.get_tk_widget().place(relx=0.6, rely=0.05, width=largeur/2.8, height=hauteur/2.8)
-    canvas.get_tk_widget().config(highlightthickness=1, highlightbackground="black")
-    canvas.draw()
+def afficher_graphique(fenetre):
+    # Lecture du fichier CSV et création d'un DataFrame avec pandas
+    data = pd.read_csv("neww.csv", delimiter=';')
+    # Création du canvas pour afficher les boutons
+    canvas = tk.Canvas(fenetre)
+    canvas.place(relx=0.8, rely=0.1, anchor=tk.NE)
+    canvas.config(highlightthickness=1, highlightbackground="black")
+
+    # Lecture ET save des sites uniques
+    with open("neww.csv", 'r') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        sites = set(row['Site'] for row in reader)
+    # Variables pour organiser les boutons en colonnes de 3 lignes
+    num_columns = 3
+    current_row = 0
+    current_column = 0
+    # Création d'un bouton pour chaque site
+    for site in sites:
+        button = tk.Button(canvas, text=site, command=lambda site=site: afficher_graphe(site))
+        button.grid(row=current_row, column=current_column, padx=5, pady=5)
+        current_row += 1
+        if current_row >= num_columns:
+            current_row = 0
+            current_column += 1
+    
+    # Fonction pour afficher le graphe du site sélectionné
+    def afficher_graphe(site):
+        # Filtrer les données pour le site sélectionné
+        site_data = data[data['Site'] == site]
+        # Calculer la valeur moyenne des "Hygro_" par colonne
+        moyennes = site_data.filter(regex='HygroTrue_').mean()
+        # Création du graphe
+        plt.figure()
+        plt.plot(moyennes, range(10, 70, 10), marker='o')
+        plt.tick_params(axis='x', top=True)
+        plt.xlabel('Valeur moyenne des "Hygrotrue_"   (en %)')
+        #on met xlabel en haut 
+        plt.gca().xaxis.set_label_position('top')
+        plt.ylabel('Prondeur_   (en cm)')
+        plt.title('Graphe Hydrométrique pour : {}'.format(site))
+        plt.gca().xaxis.set_ticks_position('top')  # Déplace les valeurs de l'axe x en haut
+        plt.gca().invert_yaxis()
+        plt.show()
+
 
 #Afficher graphique et excel
 def afficher():
     afficher_tab()
-    afficher_graphique()
+    afficher_graphique(fenetre)
 
 
 # Fonction pour changer le theme
@@ -430,8 +453,10 @@ hauteur = fenetre.winfo_screenheight()
 
 
 #bouton pour quitter
-boutton = Button(fenetre, text="Quitter", command=fenetre.quit)
+boutton = Button(fenetre, text="Quitter", command=quit)
 boutton.place(x=largeur-50, y=0)
+def quit() :
+    fenetre.quit()
 
 
 #bouton de bienvenue
