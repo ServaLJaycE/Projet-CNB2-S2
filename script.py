@@ -1,4 +1,4 @@
-from openpyxl import load_workbook
+#from openpyxl import load_workbook
 from tkinter import * 
 from tkinter.filedialog import *
 import tkinter as tk
@@ -412,15 +412,15 @@ def tracer_barres(sandy, clay, loam):
         os.system("alerte_triangle.vbs")
     else :
         #on trace les traits
-        x1 = 2.5*(clay/2)
-        y1 = 2.5*(100 - clay)
-        x2 = 2.5*(0.5*loam +50)
-        y2 = 2.5*(loam)
-        x3 = 2.5*(100-sandy)
-        y3 = 2.5*(100)
-        lignes.append(canvas.create_line(x1, y1, 2.5*100, y1, fill="red", width=3) )#clay
-        lignes.append(canvas.create_line(x2, y2, 2.5*-900, 2.5*2000, fill="blue", width=3)) #loam
-        lignes.append(canvas.create_line(x3, y3, 2.5*-10000, 2.5*-20000, fill="green", width=3))
+        x1 = 3*(clay/2)
+        y1 = 3*(100 - clay)
+        x2 = 3*(0.5*loam +50)
+        y2 = 3*(loam)
+        x3 = 3*(100-sandy)
+        y3 = 3*(100)
+        lignes.append(canvas.create_line(x1, y1, 3*100, y1, fill="red", width=3) )#clay
+        lignes.append(canvas.create_line(x2, y2, 3*-900, 3*2000, fill="blue", width=3)) #loam
+        lignes.append(canvas.create_line(x3, y3, 3*-10000, 3*-20000, fill="green", width=3))
         
 
 
@@ -569,10 +569,10 @@ resultat_label.pack(anchor="w",padx=90,pady=0)
 
 # Chargement de l'image du triangle des sols
 img = Image.open("img.png")
-img = img.resize((250, 250), Image.ANTIALIAS)
+img = img.resize((300, 300), Image.ANTIALIAS)
 img = ImageTk.PhotoImage(img)
 # Création du canevas pour afficher l'image
-canvas = tk.Canvas(cadre_image, width=250, height=250)
+canvas = tk.Canvas(cadre_image, width=300, height=300)
 canvas.pack(side="top")
 canvas.create_image(0, 0, anchor=tk.NW, image=img)
 
