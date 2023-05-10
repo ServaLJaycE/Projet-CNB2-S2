@@ -202,7 +202,7 @@ def executer_generique():
     resultat="fin"
     resultat_label.configure(text="état : " + str(resultat))
 
-def calcul_perso(alpha,beta,omega,tableau):
+def calcul_perso(alpha,beta,tableau):
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -233,16 +233,15 @@ def calcul_perso(alpha,beta,omega,tableau):
         writer.writerows(new_donnees)
 def executer_perso():
     #essayer d'executer ses lignes sinon ..
-    #try :
-    alpha = float(valeur_alpha.get())
-    beta = float(valeur_beta.get())
-    omega = float(valeur_omega.get())
-    donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
-    calcul_perso(alpha,beta,omega,donnees_importees)
-    resultat="fin"
-    resultat_label.configure(text="état : "+str(resultat))
-    #except:
-        #os.system("alerte_val_perso.vbs")
+    try :
+        alpha = float(valeur_alpha.get())
+        beta = float(valeur_beta.get())
+        donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
+        calcul_perso(alpha,beta,donnees_importees)
+        resultat="fin"
+        resultat_label.configure(text="état : "+str(resultat))
+    except:
+        os.system("alerte_val_perso.vbs")
 
 
 # Afficher le nouveau tableau excel
@@ -268,7 +267,11 @@ def afficher_graphique(fenetre):
     # Création du canvas pour afficher les boutons
     canvas = tk.Canvas(fenetre)
     canvas.place(relx=0.8, rely=0.1, anchor=tk.NE)
-    canvas.config(highlightthickness=1, highlightbackground="black")
+    if switch_value==1:
+        canvas.config(highlightthickness=1, highlightbackground="black")
+    else :
+        canvas.config(highlightthickness=1, highlightbackground="black", bg="#26242f")
+    #canvas.config(highlightthickness=1, highlightbackground="black")
 
     # Lecture ET save des sites uniques
     with open("neww.csv", 'r') as file:
@@ -315,7 +318,7 @@ def afficher():
 
 # Fonction pour changer le theme
 def toggle():
-    global switch_value
+    global switch_value, img, canvas_image
     if switch_value == True:
         switch.config(image=dark, bg="#26242f",
                       activebackground="#26242f")
@@ -349,10 +352,13 @@ def toggle():
         cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
         valeurs_perso_label.config(bg="#26242f", fg="white")
         valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
+        #image triangle des sols
+        img = Image.open("imgd.png")
+        affiche_image()
         #couleur du graphique
         plt.style.use('dark_background')
         if os.path.exists("neww.csv"):
-          afficher_graphique()
+          afficher_graphique(fenetre)
     else:
         switch.config(image=light, bg="white", 
                       activebackground="white")
@@ -386,10 +392,13 @@ def toggle():
         cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
         valeurs_perso_label.config(bg="white", fg="black")
         valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
+        #image triangle des sols
+        img = Image.open("imgl.png")
+        affiche_image()
         #couleur du graphique
         plt.style.use('default')
         if os.path.exists("neww.csv"):
-          afficher_graphique()
+          afficher_graphique(fenetre)
 
 
 # Définition de la fonction pour récupérer les valeurs entrées par l'utilisateur #2
@@ -403,9 +412,10 @@ def recup_valeurs():
 #Fonction pour dessiner les barres #3
 lignes =[]
 def tracer_barres(sandy, clay, loam):
+    global lignes, canvas_image
     #on efface les anciennes barres
     for ligne in lignes :
-        canvas.delete(ligne)
+        canvas_image.delete(ligne)
     lignes.clear()
     if (sandy+clay+loam) != 100:
         #on run l'alerte_triangle_sol.vbs
@@ -418,9 +428,9 @@ def tracer_barres(sandy, clay, loam):
         y2 = 3*(loam)
         x3 = 3*(100-sandy)
         y3 = 3*(100)
-        lignes.append(canvas.create_line(x1, y1, 3*100, y1, fill="red", width=3) )#clay
-        lignes.append(canvas.create_line(x2, y2, 3*-900, 3*2000, fill="blue", width=3)) #loam
-        lignes.append(canvas.create_line(x3, y3, 3*-10000, 3*-20000, fill="green", width=3))
+        lignes.append(canvas_image.create_line(x1, y1, 3*100, y1, fill="red", width=3) )#clay
+        lignes.append(canvas_image.create_line(x2, y2, 3*-900, 3*2000, fill="blue", width=3)) #loam
+        lignes.append(canvas_image.create_line(x3, y3, 3*-10000, 3*-20000, fill="green", width=3))
         
 
 
@@ -547,17 +557,15 @@ boutton_el.pack(anchor="w", padx=10, pady=5)
 boutton_pers= Button(cadre_boutons, text="valeurs précises",command=executer_perso)
 boutton_pers.pack(anchor="w", padx=10, pady=(15,5))
 #Indication zone de texte valeurs perso
-valeurs_perso_label = tk.Label(cadre_boutons, text="Alpha   Beta    Omega",width=20, height=1)
+valeurs_perso_label = tk.Label(cadre_boutons, text=" Alpha     Beta",width=12, height=1)
 valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
 #Zone de texte pour entrer valeurs perso
 valeur_alpha = tk.Entry(cadre_boutons,width=3) #height=1
 valeur_alpha.pack(side="left",ipadx=4, padx=(25,0), pady=(5,0))
 valeur_beta = tk.Entry(cadre_boutons, width=3)
 valeur_beta.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
-valeur_omega = tk.Entry(cadre_boutons,width=3)
-valeur_omega.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
-
-
+#valeur_omega = tk.Entry(cadre_boutons,width=3)
+#valeur_omega.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
 
 
 #état de la modification
@@ -566,15 +574,20 @@ resultat_label.pack(anchor="w",padx=90,pady=0)
 
 
 
-
+canvas_image = None
 # Chargement de l'image du triangle des sols
-img = Image.open("img.png")
-img = img.resize((300, 300), Image.ANTIALIAS)
-img = ImageTk.PhotoImage(img)
-# Création du canevas pour afficher l'image
-canvas = tk.Canvas(cadre_image, width=300, height=300)
-canvas.pack(side="top")
-canvas.create_image(0, 0, anchor=tk.NW, image=img)
+img = Image.open("imgl.png")
+def affiche_image():
+    global img, canvas_image, lignes
+    img = img.resize((300, 300), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img)
+    # Création du canevas pour afficher l'image
+    if canvas_image != None:
+        canvas_image.destroy()
+    canvas_image = tk.Canvas(cadre_image, width=300, height=300, highlightthickness=0)
+    canvas_image.pack(side="top")
+    canvas_image.create_image(0, 0, anchor=tk.NW, image=img)
+affiche_image()
 
 
 #Bouton de preview du nouveau fichier excel 
