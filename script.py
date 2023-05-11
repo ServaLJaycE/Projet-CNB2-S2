@@ -471,7 +471,7 @@ boutton.place(x=largeur-50, y=0)
 
 
 #bouton de bienvenue
-label_titre = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black")
+label_titre = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="black", font=("Helvetica", 10))
 label_titre.pack()
 
 
