@@ -463,10 +463,11 @@ hauteur = fenetre.winfo_screenheight()
 
 
 #bouton pour quitter
-boutton = Button(fenetre, text="Quitter", command=quit)
-boutton.place(x=largeur-50, y=0)
 def quit() :
     fenetre.quit()
+boutton = Button(fenetre, text="Quitter", command=quit)
+boutton.place(x=largeur-50, y=0)
+
 
 
 #bouton de bienvenue
