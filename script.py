@@ -580,7 +580,7 @@ canvas_image = None
 img = Image.open("imgl.png")
 def affiche_image():
     global img, canvas_image, lignes
-    img = img.resize((300, 300), Image.LANCZOS)
+    img = img.resize((300, 300), Image.LANCZOS) #LANCZOS plutot que ANTIALIAS, car ANTIALIAS est bientot plus supporté
     img = ImageTk.PhotoImage(img)
     # Création du canevas pour afficher l'image
     if canvas_image != None:
