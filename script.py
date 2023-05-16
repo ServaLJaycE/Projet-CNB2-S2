@@ -1,4 +1,3 @@
-#from openpyxl import load_workbook
 from tkinter import * 
 from tkinter.filedialog import *
 import tkinter as tk
@@ -10,20 +9,11 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import ImageTk, Image 
 
 
+#/////////////////////////////////////////////////////////////////////////////////////////
+#Les fonctions :
+#/////////////////////////////////////////////////////////////////////////////////////////
 
-uyg
 
-#Toutes les fonctions :
-
-
-#Fonction pour modifier le excel
-#def import_excel():
-    #on charge le fichier excel
-    ##nom_fichier = texte.get("1.0", "end-1c")
-    ##nom_fichier = nom_fichier + ".xlsx"
-    ##workbook = load_workbook(filename=nom_fichier)
-    #donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('xlsx files','.xlsx')])
-    #return donnees_importees
   
 
 #Les fonction de calcul
@@ -271,9 +261,8 @@ def afficher_graphique(fenetre):
         canvas.config(highlightthickness=1, highlightbackground="black")
     else :
         canvas.config(highlightthickness=1, highlightbackground="black", bg="#26242f")
-    #canvas.config(highlightthickness=1, highlightbackground="black")
 
-    # Lecture ET save des sites uniques
+    # Lecture ET save des différents sites
     with open("neww.csv", 'r') as file:
         reader = csv.DictReader(file, delimiter=';')
         sites = set(row['Site'] for row in reader)
@@ -316,7 +305,7 @@ def afficher():
     afficher_graphique(fenetre)
 
 
-# Fonction pour changer le theme
+# Fonction pour changer le theme (dark/light)
 def toggle():
     global switch_value, img, canvas_image
     if switch_value == True:
@@ -401,7 +390,7 @@ def toggle():
           afficher_graphique(fenetre)
 
 
-# Définition de la fonction pour récupérer les valeurs entrées par l'utilisateur #2
+# Définition de la fonction pour récupérer les valeurs entrées par l'utilisateur puis tracer barres
 def recup_valeurs():
     sandy = float(sandy_entry.get())
     clay = float(clay_entry.get())
@@ -409,7 +398,7 @@ def recup_valeurs():
     tracer_barres(sandy, clay, loam)
 
 
-#Fonction pour dessiner les barres #3
+#Fonction pour dessiner les barres
 lignes =[]
 def tracer_barres(sandy, clay, loam):
     global lignes, canvas_image
@@ -436,7 +425,11 @@ def tracer_barres(sandy, clay, loam):
 
 
 
-#On met le code principal :
+
+
+#/////////////////////////////////////////////////////////////////////////////////////////
+#La fenetre principale :
+#/////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -445,7 +438,7 @@ def tracer_barres(sandy, clay, loam):
 #on cree la fenetre
 fenetre = Tk()
 fenetre.title("S-EAU-L")
-fenetre.geometry("500x500")
+#fenetre.geometry("500x500") innutile car fullscreen
 fenetre.config(bg="white") 
   
 
@@ -475,7 +468,7 @@ label_titre = Label(fenetre, text="Bienvenue dans S-EAU-L", bg="white", fg="blac
 label_titre.pack()
 
 
-#Les deux cadres principaux 
+#Les deux cadres principaux, ne pas hésiter a recolorier les bg pour comprendre l'organisation
 cadre_utilisateur = tk.Frame(fenetre)
 cadre_utilisateur.config(bg="white")
 cadre_utilisateur.pack(side="left",anchor="nw",padx=0, pady=(30,0))
@@ -530,29 +523,26 @@ valider_button.pack()
 label_select2 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg="white", fg="black")
 label_select2.pack(anchor="w", padx=10, pady=20)
 
-#bouton importattion terre
+#bouton importattion sable
 boutton_e = Button(cadre_boutons, text="Limon sableux", command=executer_sable)
 boutton_e.pack(anchor="w", padx=10, pady=5)
 
-#bouton importattion eau
+#bouton importattion limon sableux
 boutton_e = Button(cadre_boutons, text="Limon sableux", command=executer_limon_sableux)
 boutton_e.pack(anchor="w", padx=10, pady=5)
 
-#bouton importattion air
+#bouton importattion limon argileux
 boutton_a = Button(cadre_boutons, text="Limon argileux",command=executer_limon_argileux)
 boutton_a.pack(anchor="w", padx=10, pady=5)
 
-#bouton importattion feu
+#bouton importattion argile sableux
 boutton_f = Button(cadre_boutons, text="Argile sableux",command=executer_argile_sableux)
 boutton_f.pack(anchor="w", padx=10, pady=5)
 
-#bouton importattion electrique
+#bouton importattion generique
 boutton_el = Button(cadre_boutons, text="Generique",command=executer_generique)
 boutton_el.pack(anchor="w", padx=10, pady=5)
 
-#bouton importattion poison
-#boutton_po = Button(cadre_boutons, text="poison")
-#boutton_po.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion valeurs perso
 boutton_pers= Button(cadre_boutons, text="valeurs précises",command=executer_perso)
@@ -565,8 +555,7 @@ valeur_alpha = tk.Entry(cadre_boutons,width=3) #height=1
 valeur_alpha.pack(side="left",ipadx=4, padx=(25,0), pady=(5,0))
 valeur_beta = tk.Entry(cadre_boutons, width=3)
 valeur_beta.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
-#valeur_omega = tk.Entry(cadre_boutons,width=3)
-#valeur_omega.pack(side="left", ipadx=4, padx=(10,0), pady=(5,0))
+
 
 
 #état de la modification
@@ -623,8 +612,17 @@ switch.place(x=0, y=0)
 
 #on ouvre fenetre en plein ecran
 fenetre.attributes('-fullscreen', True)
-
 fenetre.mainloop()
-#FIN
+
+
+# coucou :)
+
+#Pour toutes questions :
+
+#logan.doceul@student.junia.com
+#evann.semens@...
+#henri.oms@...
+#vincent.damery@...
+
 
 
