@@ -11,7 +11,7 @@ from PIL import ImageTk, Image
 
 
 
-
+uyg
 
 #Toutes les fonctions :
 
