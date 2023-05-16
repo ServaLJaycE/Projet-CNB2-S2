@@ -15,9 +15,17 @@ from PIL import ImageTk, Image
 
 
   
+#Fonction pour avoir chemin d'accées de depot
+#def chemin_fichier():
+#    global filepath
+#    filepath = askdirectory(title="Ouvrir un fichier")
+#idée abandonné car necessaire de lancer l'application en mode administrateur, ce qui peut etre contraignant et effrayant pour l'utilisateur
+#Mais il suffirait d'utiliser dans ce cas la open(filepath,...) dans les fonctions 
+#De base cette fonction était éxecuté en appuyant sur le bouton "zone de depot"
 
 #Les fonction de calcul
 def calcul_sable(tableau):
+#   global filepath ( a ne pas oublier si vous voulez restaurer la fonction chemin_fichier)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -524,20 +532,20 @@ label_select2 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg=
 label_select2.pack(anchor="w", padx=10, pady=20)
 
 #bouton importattion sable
-boutton_e = Button(cadre_boutons, text="Limon sableux", command=executer_sable)
-boutton_e.pack(anchor="w", padx=10, pady=5)
+boutton_s = Button(cadre_boutons, text="Sable", command=executer_sable)
+boutton_s.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion limon sableux
-boutton_e = Button(cadre_boutons, text="Limon sableux", command=executer_limon_sableux)
-boutton_e.pack(anchor="w", padx=10, pady=5)
+boutton_ls = Button(cadre_boutons, text="Limon sableux", command=executer_limon_sableux)
+boutton_ls.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion limon argileux
-boutton_a = Button(cadre_boutons, text="Limon argileux",command=executer_limon_argileux)
-boutton_a.pack(anchor="w", padx=10, pady=5)
+boutton_la = Button(cadre_boutons, text="Limon argileux",command=executer_limon_argileux)
+boutton_la.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion argile sableux
-boutton_f = Button(cadre_boutons, text="Argile sableux",command=executer_argile_sableux)
-boutton_f.pack(anchor="w", padx=10, pady=5)
+boutton_as = Button(cadre_boutons, text="Argile sableux",command=executer_argile_sableux)
+boutton_as.pack(anchor="w", padx=10, pady=5)
 
 #bouton importattion generique
 boutton_el = Button(cadre_boutons, text="Generique",command=executer_generique)
