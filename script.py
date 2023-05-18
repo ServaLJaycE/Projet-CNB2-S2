@@ -632,8 +632,9 @@ fenetre.mainloop()
 #henri.oms@...
 #vincent.damery@...
 
-#Pour acceder au Github du projet :
-# https://github.com/ServaLJaycE/Projet-CNB2-S2
+#GutHub : 
+# ServaLJayce
+# enfzrhbveivberv
 
 
 
