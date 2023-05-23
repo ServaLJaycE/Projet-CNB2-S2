@@ -20,6 +20,7 @@ filepath="Neant"
 def chemin_fichier():
     global filepath
     filepath = askdirectory(title="Ouvrir un fichier")
+    dossier_label.configure(text="dossier : " + filepath)
 
 
 tableau_new=""
@@ -398,6 +399,8 @@ def toggle():
         clay_label.pack()
         resultat_label.config(bg="#26242f", fg="white")
         resultat_label.pack()
+        dossier_label.config(bg="#26242f", fg="white")
+        dossier_label.pack()
         text_pre.config(bg="black", fg="white") #bg ="grey15"
         text_pre.pack()
         cadre_utilisateur.config(bg="#26242f")
@@ -443,6 +446,8 @@ def toggle():
         loam_label.pack()
         resultat_label.config(bg="white", fg="black")
         resultat_label.pack()
+        dossier_label.config(bg="white", fg="black")
+        dossier_label.pack()
         text_pre.config(bg="white", fg="black")
         text_pre.pack()
         cadre_utilisateur.config(bg="white")
@@ -607,6 +612,10 @@ label_select2_2.pack(anchor="w", padx=10, pady=0)
 #bouton importation zone de depot
 boutton_f = Button(cadre_boutons, text="Choisir la zone depot", command=chemin_fichier)
 boutton_f.pack(anchor="w", padx=10, pady=(5,20))
+#état de la modification
+dossier_label=tk.Label(cadre_boutons,text="etat : ")
+dossier_label.pack(anchor="w",padx=180,pady=0)
+
 
 
 
