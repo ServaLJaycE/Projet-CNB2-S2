@@ -531,7 +531,7 @@ valider_button.pack()
 label_select2 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg="white", fg="black")
 label_select2.pack(anchor="w", padx=10, pady=20)
 
-#bouton importattion sable
+#bouton importation sable
 boutton_s = Button(cadre_boutons, text="Sable", command=executer_sable)
 boutton_s.pack(anchor="w", padx=10, pady=5)
 
