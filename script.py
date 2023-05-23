@@ -16,20 +16,25 @@ from PIL import ImageTk, Image
 
   
 #Fonction pour avoir chemin d'accées de depot
+filepath="Neant"
 def chemin_fichier():
     global filepath
     filepath = askdirectory(title="Ouvrir un fichier")
-    print (filepath) 
-    print("CE SERA ICI QUE LE FICHIER SERA ENREGISTRER")
 
 
 tableau_new=""
 #Les fonction de calcul
 def calcul_sable(tableau):
-    global tableau_new
-    tableau_new=tableau[:-4]+"_new.csv"
-#   global filepath ( a ne pas oublier si vous voulez restaurer la fonction chemin_fichier)
-    #ouverture du csv en mode lecture
+    global tableau_new, filepath
+    #On regarde si une zone de dépot a été choisie
+    if filepath == "Neant":
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=nom_fichier[:-4]+"_new.csv"
+    else:
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=filepath+"/"+nom_fichier[:-4]+"_new.csv"
+        print(tableau_new)
+    #On passe au coeur de la fonction, d'abord lecture du csv
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
     #extrait l'entete du csv
@@ -65,8 +70,15 @@ def executer_sable():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_limon_sableux(tableau):
-    global tableau_new
-    tableau_new=tableau[:-4]+"_new.csv"
+    global tableau_new, filepath
+    #On regarde si une zone de dépot a été choisie
+    if filepath == "Neant":
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=nom_fichier[:-4]+"_new.csv"
+    else:
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=filepath+"/"+nom_fichier[:-4]+"_new.csv"
+        print(tableau_new)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -102,8 +114,15 @@ def executer_limon_sableux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_limon_argileux(tableau):
-    global tableau_new
-    tableau_new=tableau[:-4]+"_new.csv"
+    global tableau_new, filepath
+    #On regarde si une zone de dépot a été choisie
+    if filepath == "Neant":
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=nom_fichier[:-4]+"_new.csv"
+    else:
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=filepath+"/"+nom_fichier[:-4]+"_new.csv"
+        print(tableau_new)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -139,8 +158,15 @@ def executer_limon_argileux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_argile_sableux(tableau):
-    global tableau_new
-    tableau_new=tableau[:-4]+"_new.csv"
+    global tableau_new, filepath
+    #On regarde si une zone de dépot a été choisie
+    if filepath == "Neant":
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=nom_fichier[:-4]+"_new.csv"
+    else:
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=filepath+"/"+nom_fichier[:-4]+"_new.csv"
+        print(tableau_new)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -176,8 +202,15 @@ def executer_argile_sableux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_generique(tableau):
-    global tableau_new
-    tableau_new=tableau[:-4]+"_new.csv"
+    global tableau_new, filepath
+    #On regarde si une zone de dépot a été choisie
+    if filepath == "Neant":
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=nom_fichier[:-4]+"_new.csv"
+    else:
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=filepath+"/"+nom_fichier[:-4]+"_new.csv"
+        print(tableau_new)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -213,8 +246,15 @@ def executer_generique():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_perso(alpha,beta,tableau):
-    global tableau_new
-    tableau_new=tableau[:-4]+"_new.csv"
+    global tableau_new, filepath
+    #On regarde si une zone de dépot a été choisie
+    if filepath == "Neant":
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=nom_fichier[:-4]+"_new.csv"
+    else:
+        nom_fichier = os.path.basename(tableau)
+        tableau_new=filepath+"/"+nom_fichier[:-4]+"_new.csv"
+        print(tableau_new)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -254,6 +294,7 @@ def executer_perso():
         resultat_label.configure(text="état : "+str(resultat))
     except:
         os.system("alerte_val_perso.vbs")
+
 
 
 # Afficher le nouveau tableau excel
@@ -331,7 +372,7 @@ def afficher():
 
 # Fonction pour changer le theme (dark/light)
 def toggle():
-    global switch_value, img, canvas_image
+    global switch_value, img, img2, canvas_image
     if switch_value == True:
         switch.config(image=dark, bg="#26242f",
                       activebackground="#26242f")
@@ -343,6 +384,10 @@ def toggle():
         label_titre.pack()
         label_select1.config(bg="#26242f", fg="white")
         label_select1.pack()
+        label_select2.config(bg="#26242f", fg="white")
+        label_select2.pack()
+        label_select2_2.config(bg="#26242f", fg="white")
+        label_select2_2.pack()
         label_select3.config(bg="#26242f", fg="white")
         label_select3.pack()
         sandy_label.config(bg="#26242f", fg="white")
@@ -360,13 +405,14 @@ def toggle():
         cadre_resultat.config(bg="#26242f")
         cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
         cadre_sol.config(bg="#26242f")
-        cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
+        cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,20))
         cadre_boutons.config(bg="#26242f")
         cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
         valeurs_perso_label.config(bg="#26242f", fg="white")
         valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
         #image triangle des sols
         img = Image.open("imgd.png")
+        img2 = Image.open("imgdd.png")
         affiche_image()
         #couleur du graphique
         plt.style.use('dark_background')
@@ -383,6 +429,10 @@ def toggle():
         label_titre.pack()
         label_select1.config(bg="white", fg="black")
         label_select1.pack()
+        label_select2.config(bg="white", fg="black")
+        label_select2.pack()
+        label_select2_2.config(bg="white", fg="black")
+        label_select2_2.pack()
         label_select3.config(bg="white", fg="black")
         label_select3.pack()
         sandy_label.config(bg="white", fg="black")
@@ -400,13 +450,14 @@ def toggle():
         cadre_resultat.config(bg="white")
         cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
         cadre_sol.config(bg="white")
-        cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
+        cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,20))
         cadre_boutons.config(bg="white")
         cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
         valeurs_perso_label.config(bg="white", fg="black")
         valeurs_perso_label.pack(anchor="w", padx=10, pady=0)
         #image triangle des sols
         img = Image.open("imgl.png")
+        img2 = Image.open("imgll.png")
         affiche_image()
         #couleur du graphique
         plt.style.use('default')
@@ -444,6 +495,7 @@ def tracer_barres(sandy, clay, loam):
         lignes.append(canvas_image.create_line(x1, y1, 3*100, y1, fill="red", width=3) )#clay
         lignes.append(canvas_image.create_line(x2, y2, 3*-900, 3*2000, fill="blue", width=3)) #loam
         lignes.append(canvas_image.create_line(x3, y3, 3*-10000, 3*-20000, fill="green", width=3))
+#voir ligne 672, pour expliquation des valeurs des coordonées, c'est trop complexe pour un commentaire
         
 
 
@@ -480,10 +532,12 @@ hauteur = fenetre.winfo_screenheight()
 
 
 #bouton pour quitter
-def quit() :
+def quitter() :
     fenetre.quit()
-boutton = Button(fenetre, text="Quitter", command=quit)
+    os.system("aurevoir.vbs")
+boutton = Button(fenetre, text="Quitter", command=quitter)
 boutton.place(x=largeur-50, y=0)
+
 
 
 
@@ -603,19 +657,33 @@ resultat_label.pack(anchor="w",padx=90,pady=0)
 
 
 canvas_image = None
+canvas_image2 = None
 # Chargement de l'image du triangle des sols
 img = Image.open("imgl.png")
+img2 = Image.open("imgll.png")
 def affiche_image():
-    global img, canvas_image, lignes
+    global img, img2, canvas_image, canvas_image2
     img = img.resize((300, 300), Image.LANCZOS) #LANCZOS plutot que ANTIALIAS, car ANTIALIAS est bientot plus supporté
     img = ImageTk.PhotoImage(img)
+    img2 = img2.resize((300, 49), Image.LANCZOS) 
+    img2 = ImageTk.PhotoImage(img2)
     # Création du canevas pour afficher l'image
     if canvas_image != None:
         canvas_image.destroy()
+    if canvas_image2 != None:
+        canvas_image2.destroy()
     canvas_image = tk.Canvas(cadre_image, width=300, height=300, highlightthickness=0)
     canvas_image.pack(side="top")
     canvas_image.create_image(0, 0, anchor=tk.NW, image=img)
+    canvas_image2 = tk.Canvas(cadre_image, width=300, height=49, highlightthickness=0)
+    canvas_image2.pack(side="top")
+    canvas_image2.create_image(0, 0, anchor=tk.NW, image=img2)
 affiche_image()
+#ici pour faciliter les traits j'ai mit une image qui est rogné sur hauteur et longueur du triangle, mais on ne voit
+#plus le pourcentage en sable, donc je rajoute une 2eme image en dessous de ce pourcentage (l'image du dessous est donc nommé img2)
+#Si besoin de savoir comment on a trouvé par exemple height=49, ou les valeurs de coordonées n'hésitez pas a demander a "logan.doceul@student.junia.com"
+
+
 
 
 #Bouton de preview du nouveau fichier excel 
