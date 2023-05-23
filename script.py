@@ -16,15 +16,18 @@ from PIL import ImageTk, Image
 
   
 #Fonction pour avoir chemin d'accées de depot
-#def chemin_fichier():
-#    global filepath
-#    filepath = askdirectory(title="Ouvrir un fichier")
-#idée abandonné car necessaire de lancer l'application en mode administrateur, ce qui peut etre contraignant et effrayant pour l'utilisateur
-#Mais il suffirait d'utiliser dans ce cas la open(filepath,...) dans les fonctions 
-#De base cette fonction était éxecuté en appuyant sur le bouton "zone de depot"
+def chemin_fichier():
+    global filepath
+    filepath = askdirectory(title="Ouvrir un fichier")
+    print (filepath) 
+    print("CE SERA ICI QUE LE FICHIER SERA ENREGISTRER")
 
+
+tableau_new=""
 #Les fonction de calcul
 def calcul_sable(tableau):
+    global tableau_new
+    tableau_new=tableau[:-4]+"_new.csv"
 #   global filepath ( a ne pas oublier si vous voulez restaurer la fonction chemin_fichier)
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
@@ -50,10 +53,11 @@ def calcul_sable(tableau):
                 new_ligne.append(str(float(ligne[j])*0.4853 - 10.836))
         new_donnees.append(new_ligne)
      #on écrit le nouveau csv avec nos variables de stockage
-    with open("neww.csv", 'w', newline='') as f:
+    with open(tableau_new, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
         writer.writerows(new_donnees)
+        print(tableau_new)
 def executer_sable():
     donnees_importees = askopenfilename(title="Ouvrir un fichier",filetypes=[('csv files','.csv'), ('xlsx files','.xlsx')])
     calcul_sable(donnees_importees)
@@ -61,6 +65,8 @@ def executer_sable():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_limon_sableux(tableau):
+    global tableau_new
+    tableau_new=tableau[:-4]+"_new.csv"
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -85,7 +91,7 @@ def calcul_limon_sableux(tableau):
                 new_ligne.append(str(float(ligne[j])*0.2072 + 11.107))
         new_donnees.append(new_ligne)
     #on écrit le nouveau csv avec nos variables de stockage
-    with open("neww.csv", 'w', newline='') as f:
+    with open(tableau_new, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
         writer.writerows(new_donnees)
@@ -96,6 +102,8 @@ def executer_limon_sableux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_limon_argileux(tableau):
+    global tableau_new
+    tableau_new=tableau[:-4]+"_new.csv"
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -120,7 +128,7 @@ def calcul_limon_argileux(tableau):
                 new_ligne.append(str(float(ligne[j])*0.5052 - 14.891))
         new_donnees.append(new_ligne)
     #on écrit le nouveau csv avec nos variables de stockage
-    with open("neww.csv", 'w', newline='') as f:
+    with open(tableau_new, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
         writer.writerows(new_donnees)
@@ -131,6 +139,8 @@ def executer_limon_argileux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_argile_sableux(tableau):
+    global tableau_new
+    tableau_new=tableau[:-4]+"_new.csv"
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -155,7 +165,7 @@ def calcul_argile_sableux(tableau):
                 new_ligne.append(str(float(ligne[j])*0.2305 + 7.3944))
         new_donnees.append(new_ligne)
     #on écrit le nouveau csv avec nos variables de stockage
-    with open("neww.csv", 'w', newline='') as f:
+    with open(tableau_new, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
         writer.writerows(new_donnees)
@@ -166,6 +176,8 @@ def executer_argile_sableux():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_generique(tableau):
+    global tableau_new
+    tableau_new=tableau[:-4]+"_new.csv"
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -190,7 +202,7 @@ def calcul_generique(tableau):
                 new_ligne.append(str(float(ligne[j])*0.2689 + 3.4664))
         new_donnees.append(new_ligne)
     #on écrit le nouveau csv avec nos variables de stockage
-    with open("neww.csv", 'w', newline='') as f:
+    with open(tableau_new, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
         writer.writerows(new_donnees)
@@ -201,6 +213,8 @@ def executer_generique():
     resultat_label.configure(text="état : " + str(resultat))
 
 def calcul_perso(alpha,beta,tableau):
+    global tableau_new
+    tableau_new=tableau[:-4]+"_new.csv"
     #ouverture du csv en mode lecture
     with open(tableau, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
@@ -225,7 +239,7 @@ def calcul_perso(alpha,beta,tableau):
                 new_ligne.append(str(float(ligne[j])*beta + alpha))
         new_donnees.append(new_ligne)
     #on écrit le nouveau csv avec nos variables de stockage
-    with open("neww.csv", 'w', newline='') as f:
+    with open(tableau_new, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(new_entetes)
         writer.writerows(new_donnees)
@@ -244,7 +258,8 @@ def executer_perso():
 
 # Afficher le nouveau tableau excel
 def afficher_tab():
-    with open("neww.csv", 'r') as f:
+    global tableau_new
+    with open(tableau_new, 'r') as f:
         donnees = list(csv.reader(f, delimiter=";"))
     # Trouver la largeur maximale de chaque colonne
     largeurs_colonnes = [max(len(element) for element in colonne) for colonne in zip(*donnees)]
@@ -260,8 +275,9 @@ def afficher_tab():
 
 # Afficher le graphique
 def afficher_graphique(fenetre):
+    global tableau_new
     # Lecture du fichier CSV et création d'un DataFrame avec pandas
-    data = pd.read_csv("neww.csv", delimiter=';')
+    data = pd.read_csv(tableau_new, delimiter=';')
     # Création du canvas pour afficher les boutons
     canvas = tk.Canvas(fenetre)
     canvas.place(relx=0.8, rely=0.1, anchor=tk.NE)
@@ -271,7 +287,7 @@ def afficher_graphique(fenetre):
         canvas.config(highlightthickness=1, highlightbackground="black", bg="#26242f")
 
     # Lecture ET save des différents sites
-    with open("neww.csv", 'r') as file:
+    with open(tableau_new, 'r') as file:
         reader = csv.DictReader(file, delimiter=';')
         sites = set(row['Site'] for row in reader)
     # Variables pour organiser les boutons en colonnes de 3 lignes
@@ -327,8 +343,8 @@ def toggle():
         label_titre.pack()
         label_select1.config(bg="#26242f", fg="white")
         label_select1.pack()
-        label_select2.config(bg="#26242f", fg="white")
-        label_select2.pack()
+        label_select3.config(bg="#26242f", fg="white")
+        label_select3.pack()
         sandy_label.config(bg="#26242f", fg="white")
         sandy_label.pack()
         loam_label.config(bg="#26242f", fg="white")
@@ -367,8 +383,8 @@ def toggle():
         label_titre.pack()
         label_select1.config(bg="white", fg="black")
         label_select1.pack()
-        label_select2.config(bg="white", fg="black")
-        label_select2.pack()
+        label_select3.config(bg="white", fg="black")
+        label_select3.pack()
         sandy_label.config(bg="white", fg="black")
         sandy_label.pack()
         clay_label.config(bg="white", fg="black")
@@ -527,9 +543,23 @@ valider_button.pack()
 
 
 
+#Titre du bouton de choix de zone de depot
+label_select2 = Label(cadre_boutons, text="Selectionez votre zone de depot :", bg="white", fg="black")
+label_select2.pack(anchor="w", padx=10, pady=(20,0))
+label_select2_2 = Label(cadre_boutons, text="(par default le fichier modifié sera déposé dans le meme fichier que celui de l'application)", bg="white", fg="black")
+label_select2_2.pack(anchor="w", padx=10, pady=0)
+
+
+#bouton importation zone de depot
+boutton_f = Button(cadre_boutons, text="Choisir la zone depot", command=chemin_fichier)
+boutton_f.pack(anchor="w", padx=10, pady=5)
+
+
+
 #titre de la zone bouton de choix de sol
-label_select2 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg="white", fg="black")
-label_select2.pack(anchor="w", padx=10, pady=20)
+label_select3 = Label(cadre_boutons, text="Selectionez votre type de sol :", bg="white", fg="black")
+label_select3.pack(anchor="w", padx=10, pady=(20,10))
+
 
 #bouton importation sable
 boutton_s = Button(cadre_boutons, text="Sable", command=executer_sable)
