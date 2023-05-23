@@ -20,7 +20,9 @@ filepath="Neant"
 def chemin_fichier():
     global filepath
     filepath = askdirectory(title="Ouvrir un fichier")
-    dossier_label.configure(text="dossier : " + filepath)
+    #On crée une variable qui a que le dernier / du chemin
+    dossier = filepath.split("/")[-1]
+    dossier_label.configure(text="dossier : " + dossier)
 
 
 tableau_new=""
@@ -572,7 +574,7 @@ cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
 
 # Cadre pour image triangle des sols
 cadre_image = tk.Frame(cadre_resultat)
-cadre_image.pack(side="top", padx=(10,500), pady=10)
+cadre_image.pack(side="top", padx=(10,0), pady=10)
 
 
 
@@ -615,6 +617,7 @@ boutton_f.pack(anchor="w", padx=10, pady=(5,20))
 #état de la modification
 dossier_label=tk.Label(cadre_boutons,text="etat : ")
 dossier_label.pack(anchor="w",padx=180,pady=0)
+
 
 
 
