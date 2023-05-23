@@ -1,6 +1,8 @@
 # Projet CNB2 S2
  Projet du 2eme semestre de l'année CNB2
  
+##README non a jour !!!
+
  Ce code permet de transformer les valeurs csv renvoyés par les sondes hydroscout en volt, en valeur plus compréhensible (Pourcentage d'eau).
 Il y est compris :
 
