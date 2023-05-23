@@ -1,5 +1,5 @@
 from tkinter import * 
-from tkinter.filedialog import *
+#from tkinter.filedialog import *
 import tkinter as tk
 import matplotlib.pyplot as plt
 import os
