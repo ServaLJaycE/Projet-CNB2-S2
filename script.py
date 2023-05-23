@@ -504,7 +504,7 @@ cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
 # Cadre pourcentage de sol
 cadre_sol = tk.Frame(cadre_utilisateur)
 cadre_sol.config(bg="white")
-cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,50))
+cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,20))
 
 # Cadre pour les boutons de choix de sol
 cadre_boutons = tk.Frame(cadre_utilisateur)
@@ -519,7 +519,7 @@ cadre_image.pack(side="top", padx=(10,500), pady=10)
 
 #titre de la zone de choix des pourcentages
 label_select1 = Label(cadre_sol, text="Trouvez votre type de sol :", bg="white", fg="black")
-label_select1.pack(anchor="w", padx=10, pady=20)
+label_select1.pack(anchor="w", padx=10, pady=(0,20))
 
 # Création des boîtes pour entrer les valeurs en pourcentage
 sandy_label = tk.Label(cadre_sol, text="Sable (en %) :")
@@ -546,13 +546,13 @@ valider_button.pack()
 #Titre du bouton de choix de zone de depot
 label_select2 = Label(cadre_boutons, text="Selectionez votre zone de depot :", bg="white", fg="black")
 label_select2.pack(anchor="w", padx=10, pady=(20,0))
-label_select2_2 = Label(cadre_boutons, text="(par default le fichier modifié sera déposé dans le meme fichier que celui de l'application)", bg="white", fg="black")
+label_select2_2 = Label(cadre_boutons, text="(par default le fichier modifié sera déposé dans le dossier de l'application)", bg="white", fg="black")
 label_select2_2.pack(anchor="w", padx=10, pady=0)
 
 
 #bouton importation zone de depot
 boutton_f = Button(cadre_boutons, text="Choisir la zone depot", command=chemin_fichier)
-boutton_f.pack(anchor="w", padx=10, pady=5)
+boutton_f.pack(anchor="w", padx=10, pady=(5,20))
 
 
 
