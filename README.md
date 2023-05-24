@@ -18,9 +18,11 @@ Il y est compris :
 Le csv d'origine ne sera pas modifié, il sera a la place créée un nouveau fichier ("[nom de l'ancien ficher] _ new.csv"), qui lui sera identique, a l'exception que chaque colonne "Hygro_", aura maintenant une voisine "HygroTrue_", contenant les valeurs en pourcentages.
 
 Voici l'application en mode dark, avec la zone de determination des sols utilisé et un fichier modifié puis montré dans la zone preview :
+![image](https://github.com/ServaLJaycE/Projet-CNB2-S2/assets/105350341/968ab8df-b370-498b-a84a-d37bd5a5eb86)
 
 
 
 
 Voici l'application, en mode light (mode par default, qui est switchable avec le bouton en haut a droite) :
+![image](https://github.com/ServaLJaycE/Projet-CNB2-S2/assets/105350341/cdb5c186-f1b6-456b-aee6-8a9384dc696c)
 
