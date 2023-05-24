@@ -3,7 +3,7 @@
  
 
 
- Ce code permet de transformer les valeurs csv renvoyés par les sondes hydroscout en volt, en valeur plus compréhensible (Pourcentage d'eau).
+ Ce code permet de transformer les valeurs csv renvoyés par les sondes hydrascout en volt, en valeur plus compréhensible (Pourcentage d'eau).
 Il y est compris :
 
 -Une zone pour connaitre son type de sol (identification via le triangle des sols et les pourcentage de grain).
