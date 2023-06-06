@@ -555,25 +555,26 @@ label_titre.pack()
 
 #Les deux cadres principaux, ne pas hésiter a recolorier les bg pour comprendre l'organisation
 cadre_utilisateur = tk.Frame(fenetre)
-cadre_utilisateur.config(bg="white")
+cadre_utilisateur.config(bg="pink")
 cadre_utilisateur.pack(side="left",anchor="nw",padx=0, pady=(30,0))
 
 cadre_resultat = tk.Frame(fenetre)
-cadre_resultat.config(bg="white")
+cadre_resultat.config(bg="red")
 cadre_resultat.pack(side="top", anchor="nw", padx=0, pady=0)
 
 # Cadre pourcentage de sol
 cadre_sol = tk.Frame(cadre_utilisateur)
-cadre_sol.config(bg="white")
+cadre_sol.config(bg="blue")
 cadre_sol.pack(side="top", anchor="nw", padx=(10,0), pady=(0,20))
 
 # Cadre pour les boutons de choix de sol
 cadre_boutons = tk.Frame(cadre_utilisateur)
-cadre_boutons.config(bg="white")
+cadre_boutons.config(bg="green")
 cadre_boutons.pack(side="top", anchor="sw", padx=(10,0), pady=0)
 
 # Cadre pour image triangle des sols
 cadre_image = tk.Frame(cadre_resultat)
+cadre_image.config(bg="purple")
 cadre_image.pack(side="top", padx=(10,0), pady=10)
 
 
@@ -744,7 +745,4 @@ fenetre.mainloop()
 
 #GitHub : 
 # ServaLJayce
-
-
-
 
