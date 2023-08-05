@@ -6,6 +6,7 @@ import os
 import csv
 import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import PIL
 from PIL import ImageTk, Image 
 
 
