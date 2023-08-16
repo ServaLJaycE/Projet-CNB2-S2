@@ -315,7 +315,7 @@ def afficher_tab():
         ligne_formatee = '  '.join(element.ljust(largeur) for element, largeur in zip(ligne, largeurs_colonnes))
         #Ici la largeur va regarder tout le long de la ligne la plus grande taille pour chaque colonne de toute la colonne et avec ljust va rajouter des espaces jusqu'a que la case de la colonne écrite actuellement soit de la taille de la plus grande case de la colonne.
         text_pre.insert(END, ligne_formatee)
-        text_pre.insert(END, "\n")
+        text_pre.insert(END, "\n") # :D
 
 
 # Afficher le graphique
