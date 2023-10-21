@@ -741,8 +741,7 @@ fenetre.mainloop()
 
 #logan.doceul@student.junia.com
 #evann.semens@...
-#henri.oms@...
-#vincent.damery@...
+
 
 #GitHub : 
 # ServaLJayce
